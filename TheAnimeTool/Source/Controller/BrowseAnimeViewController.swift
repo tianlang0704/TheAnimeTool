@@ -59,11 +59,17 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
         if let idxs = self.animeCollectionView.indexPathsForSelectedItems(){
             for idx in idxs{
                 self.animeCollectionView.deselectItemAtIndexPath(idx, animated: true)
             }
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func didReceiveMemoryWarning() {
