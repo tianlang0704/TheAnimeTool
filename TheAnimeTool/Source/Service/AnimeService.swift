@@ -22,11 +22,17 @@ public class AnimeService: NSObject {
     
     static let LocalAnimeWillUpdateNotification = "LocalAnimeWillUpdateNotification"
     static let LocalAnimeDidUpdateNotification = "LocalAnimeDidUpdateNotification"
+    //This notification will return an NSError as the object
     static let LocalAnimeUpdateFailedNotification = "LocalAnimeUpdateFailedNotification"
     
     var tokenString: String? = nil
     var tokenExpire: NSDate = NSDate(timeIntervalSince1970: 0)
     var insertIndexForTempEntries = 0
+    
+    override init(){
+        super.init()
+        self.LoadTokenAndTime()
+    }
     
     func UpdateTempWithAiringAnimes(){
         self.ClearTempAnimes()
@@ -88,6 +94,7 @@ public class AnimeService: NSObject {
             if let tokenExpire = dataJSON["expires_in"].int {
                 self.tokenExpire = NSDate(timeIntervalSinceNow: Double(tokenExpire - 10))
                 self.tokenString = tokenString
+                self.SaveTokenAndTime()
             }
             print(tokenString)
             print(self.tokenExpire)
@@ -153,6 +160,20 @@ public class AnimeService: NSObject {
         request.predicate = NSPredicate(format: "animeFlagTemp == YES")
         context.deleteAllData(request)
         self.insertIndexForTempEntries = 0
+    }
+    
+    func SaveTokenAndTime(){
+        NSUserDefaults.standardUserDefaults().setObject(self.tokenString, forKey: "AnilistTokenString")
+        NSUserDefaults.standardUserDefaults().setDouble(self.tokenExpire.timeIntervalSince1970, forKey: "AnilistTokenExpire")
+    }
+    
+    func LoadTokenAndTime(){
+        let tokenExpire = NSUserDefaults.standardUserDefaults().doubleForKey("AnilistTokenExpire")
+        guard tokenExpire != 0 else { return }
+        guard let tokenString = NSUserDefaults.standardUserDefaults().stringForKey("AnilistTokenString") else { return }
+        
+        self.tokenExpire = NSDate(timeIntervalSince1970: tokenExpire)
+        self.tokenString = tokenString
     }
     
     static let sharedAnimeService = AnimeService()
