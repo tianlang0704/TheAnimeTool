@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zxH-Ha-K3h">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Torrent List-->
+        <scene sceneID="08H-EC-Seu">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Xrc-5q-4Z7" customClass="TorrentListViewController" customModule="TheAnimeTool" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bdW-4J-3VL"/>
+                        <viewControllerLayoutGuide type="bottom" id="QUy-Jf-efC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MBo-ec-4XR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mpV-On-bYh">
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TorrentProtoCell1" textLabel="ifz-WG-Sfu" detailTextLabel="eiM-9H-S6Y" style="IBUITableViewCellStyleSubtitle" id="SlK-ca-9rh">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SlK-ca-9rh" id="vk0-Q3-zCg">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Anime title" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ifz-WG-Sfu">
+                                                    <rect key="frame" x="15" y="9" width="61" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="torrent information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eiM-9H-S6Y">
+                                                    <rect key="frame" x="15" y="24" width="83" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="6dW-Zv-5vH" kind="show" id="1d1-kw-v21"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Xrc-5q-4Z7" id="3lP-4d-GAu"/>
+                                    <outlet property="delegate" destination="Xrc-5q-4Z7" id="MXf-g2-Se1"/>
+                                </connections>
+                            </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VFh-2p-HtZ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Xrc-5q-4Z7" id="G9z-ow-tNi"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VFh-2p-HtZ" firstAttribute="top" secondItem="bdW-4J-3VL" secondAttribute="bottom" id="9ps-mW-G0h"/>
+                            <constraint firstAttribute="trailing" secondItem="VFh-2p-HtZ" secondAttribute="trailing" id="AaT-8r-LH8"/>
+                            <constraint firstItem="mpV-On-bYh" firstAttribute="bottom" secondItem="QUy-Jf-efC" secondAttribute="top" id="SMQ-da-aZj"/>
+                            <constraint firstItem="mpV-On-bYh" firstAttribute="top" secondItem="VFh-2p-HtZ" secondAttribute="bottom" id="TY3-Ai-Cxf"/>
+                            <constraint firstItem="VFh-2p-HtZ" firstAttribute="trailing" secondItem="mpV-On-bYh" secondAttribute="trailing" id="U5E-Yg-7rG"/>
+                            <constraint firstItem="VFh-2p-HtZ" firstAttribute="leading" secondItem="mpV-On-bYh" secondAttribute="leading" id="fa8-Y7-sfF"/>
+                            <constraint firstItem="VFh-2p-HtZ" firstAttribute="leading" secondItem="MBo-ec-4XR" secondAttribute="leading" id="hEO-am-6RU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Torrent List" id="auL-4Q-xnP"/>
+                    <connections>
+                        <outlet property="torrentSearchBar" destination="VFh-2p-HtZ" id="yzn-w5-U8j"/>
+                        <outlet property="torrentTableView" destination="mpV-On-bYh" id="rMI-Q4-geb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M3F-ty-hdR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2354" y="430"/>
+        </scene>
+        <!--Video List-->
+        <scene sceneID="H7L-mu-tZz">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="6dW-Zv-5vH" customClass="VideoListViewController" customModule="TheAnimeTool" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XHV-0P-EEB"/>
+                        <viewControllerLayoutGuide type="bottom" id="jRd-QU-JVv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="riN-fQ-4rj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qU1-AB-qeu">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="VideoProtoCell1" textLabel="mbX-GS-nmv" detailTextLabel="vpC-TV-I9r" style="IBUITableViewCellStyleSubtitle" id="DGd-br-nYB">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DGd-br-nYB" id="feG-Ee-8ZC">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Video name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mbX-GS-nmv">
+                                                    <rect key="frame" x="15" y="9" width="67" height="15"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Length, Size info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vpC-TV-I9r">
+                                                    <rect key="frame" x="15" y="24" width="74" height="11"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="rlq-Sf-43D" kind="showDetail" id="iZC-gU-U4i"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="6dW-Zv-5vH" id="gpH-O1-Xki"/>
+                                    <outlet property="delegate" destination="6dW-Zv-5vH" id="eSL-1C-Z9E"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qU1-AB-qeu" secondAttribute="trailing" id="rQP-JQ-yg4"/>
+                            <constraint firstItem="qU1-AB-qeu" firstAttribute="bottom" secondItem="jRd-QU-JVv" secondAttribute="top" id="riC-ZJ-ITy"/>
+                            <constraint firstItem="qU1-AB-qeu" firstAttribute="leading" secondItem="riN-fQ-4rj" secondAttribute="leading" id="tYr-Ve-qbF"/>
+                            <constraint firstItem="qU1-AB-qeu" firstAttribute="top" secondItem="XHV-0P-EEB" secondAttribute="bottom" id="u1M-yV-wUl"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Video List" id="rnd-r0-4Fb"/>
+                    <connections>
+                        <outlet property="videoTableView" destination="qU1-AB-qeu" id="w9F-oG-wIQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s0r-hI-9Tp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3026" y="430"/>
+        </scene>
+        <!--AV Player View Controller-->
+        <scene sceneID="gG2-mk-xek">
+            <objects>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="rlq-Sf-43D" customClass="VideoPlayerController" customModule="TheAnimeTool" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6b2-VO-82M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3690" y="430"/>
+        </scene>
+        <!--Browse Anime-->
+        <scene sceneID="8om-lN-zLh">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="wCB-HS-HUC" customClass="BrowseAnimeViewController" customModule="TheAnimeTool" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1bV-gy-oFR"/>
+                        <viewControllerLayoutGuide type="bottom" id="7l4-d4-hLH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Cq-je-ovM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="brk-lN-xVM">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <outlet property="delegate" destination="wCB-HS-HUC" id="L8l-Xz-sLB"/>
+                                </connections>
+                            </searchBar>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Q9w-NO-fmd">
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
+                                <color key="backgroundColor" red="0.92670157068062831" green="0.92670157068062831" blue="0.92670157068062831" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="Hqm-fd-5oI">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AnimeProtoCell1" id="x6N-OS-0We" customClass="AnimeCollectionViewCell" customModule="TheAnimeTool" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m5Y-4K-8sb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.90000000000000002" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" indicatorStyle="black" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2O1-F0-uOj">
+                                                    <rect key="frame" x="0.0" y="10" width="50" height="40"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="hlC-Jn-NbD"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="m5Y-4K-8sb" firstAttribute="trailing" secondItem="2O1-F0-uOj" secondAttribute="trailing" id="08X-L3-yJc"/>
+                                            <constraint firstItem="m5Y-4K-8sb" firstAttribute="leading" secondItem="x6N-OS-0We" secondAttribute="leading" id="8Lc-vh-YYR"/>
+                                            <constraint firstItem="m5Y-4K-8sb" firstAttribute="top" secondItem="x6N-OS-0We" secondAttribute="top" id="C8l-7g-0ZJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="m5Y-4K-8sb" secondAttribute="trailing" id="HyT-tS-yIH"/>
+                                            <constraint firstItem="2O1-F0-uOj" firstAttribute="bottom" secondItem="m5Y-4K-8sb" secondAttribute="bottom" id="JRb-FV-dt3"/>
+                                            <constraint firstItem="m5Y-4K-8sb" firstAttribute="leading" secondItem="2O1-F0-uOj" secondAttribute="leading" id="dPq-zs-GWP"/>
+                                            <constraint firstAttribute="bottom" secondItem="2O1-F0-uOj" secondAttribute="bottom" id="wIx-U4-pWh"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="image" destination="m5Y-4K-8sb" id="rOQ-7n-aVb"/>
+                                            <outlet property="shortDescription" destination="2O1-F0-uOj" id="rz8-Zp-19b"/>
+                                            <segue destination="Xrc-5q-4Z7" kind="show" id="aea-yP-VOe"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="wCB-HS-HUC" id="3pE-Tu-AMm"/>
+                                    <outlet property="delegate" destination="wCB-HS-HUC" id="Fm0-bP-RuP"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="brk-lN-xVM" firstAttribute="trailing" secondItem="Q9w-NO-fmd" secondAttribute="trailing" id="4OS-my-8za"/>
+                            <constraint firstItem="Q9w-NO-fmd" firstAttribute="bottom" secondItem="7l4-d4-hLH" secondAttribute="top" id="5kB-Yw-a2b"/>
+                            <constraint firstItem="Q9w-NO-fmd" firstAttribute="top" secondItem="brk-lN-xVM" secondAttribute="bottom" id="7L9-9U-4MS"/>
+                            <constraint firstItem="brk-lN-xVM" firstAttribute="leading" secondItem="Q9w-NO-fmd" secondAttribute="leading" id="Hn2-vc-Kw0"/>
+                            <constraint firstItem="brk-lN-xVM" firstAttribute="top" secondItem="1bV-gy-oFR" secondAttribute="bottom" id="INn-Q4-Yhc"/>
+                            <constraint firstItem="brk-lN-xVM" firstAttribute="leading" secondItem="2Cq-je-ovM" secondAttribute="leading" id="Otv-gf-k5T"/>
+                            <constraint firstAttribute="trailing" secondItem="brk-lN-xVM" secondAttribute="trailing" id="Uhw-eG-SFQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Browse Anime" id="dQx-rX-qMz"/>
+                    <connections>
+                        <outlet property="animeCollectionView" destination="Q9w-NO-fmd" id="K2j-KY-9hE"/>
+                        <outlet property="animeSearchBar" destination="brk-lN-xVM" id="6Cf-H7-Ktb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jtx-ga-8Nz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1687" y="430"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="omW-ca-clE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zxH-Ha-K3h" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zse-QU-iUG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wCB-HS-HUC" kind="relationship" relationship="rootViewController" id="dpt-Si-ayW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wmy-v0-2Ek" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="943" y="430"/>
+        </scene>
+    </scenes>
+</document>

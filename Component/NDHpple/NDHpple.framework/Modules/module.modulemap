@@ -1,0 +1,10 @@
+framework module NDHpple {
+  umbrella header "NDHpple.h"
+
+  export *
+  module * { export * }
+}
+
+module NDHpple.Swift {
+    header "NDHpple-Swift.h"
+}

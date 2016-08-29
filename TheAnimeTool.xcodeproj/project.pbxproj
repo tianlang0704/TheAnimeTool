@@ -7,14 +7,77 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A96105B01D71ED71006D39D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105AF1D71ED71006D39D0 /* AppDelegate.swift */; };
-		A96105B21D71ED71006D39D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105B11D71ED71006D39D0 /* ViewController.swift */; };
 		A96105B51D71ED71006D39D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96105B31D71ED71006D39D0 /* Main.storyboard */; };
-		A96105B81D71ED71006D39D0 /* TheAnimeTool.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A96105B61D71ED71006D39D0 /* TheAnimeTool.xcdatamodeld */; };
 		A96105BA1D71ED71006D39D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A96105B91D71ED71006D39D0 /* Assets.xcassets */; };
 		A96105BD1D71ED71006D39D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A96105BB1D71ED71006D39D0 /* LaunchScreen.storyboard */; };
 		A96105C81D71ED72006D39D0 /* TheAnimeToolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105C71D71ED72006D39D0 /* TheAnimeToolTests.swift */; };
 		A96105D31D71ED72006D39D0 /* TheAnimeToolUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105D21D71ED72006D39D0 /* TheAnimeToolUITests.swift */; };
+		A961066D1D72FB6B006D39D0 /* afterlife.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105EA1D72FB6B006D39D0 /* afterlife.swift */; };
+		A961066E1D72FB6B006D39D0 /* NSNotificationCenter+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105EB1D72FB6B006D39D0 /* NSNotificationCenter+Promise.swift */; };
+		A961066F1D72FB6B006D39D0 /* NSObject+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105EC1D72FB6B006D39D0 /* NSObject+Promise.swift */; };
+		A96106701D72FB6B006D39D0 /* NSURLSession+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105ED1D72FB6B006D39D0 /* NSURLSession+Promise.swift */; };
+		A96106731D72FB6B006D39D0 /* SwiftyJSON+NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96105F11D72FB6B006D39D0 /* SwiftyJSON+NSDate.swift */; };
+		A96106751D72FB6B006D39D0 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = A96105F51D72FB6B006D39D0 /* Controller.m */; };
+		A96106761D72FB6B006D39D0 /* NSDate+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = A96105F81D72FB6B006D39D0 /* NSDate+Helper.m */; };
+		A96106771D72FB6B006D39D0 /* NSDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A96105FA1D72FB6B006D39D0 /* NSDictionaryAdditions.m */; };
+		A96106781D72FB6B006D39D0 /* NSString+RelativePath.m in Sources */ = {isa = PBXBuildFile; fileRef = A96105FC1D72FB6B006D39D0 /* NSString+RelativePath.m */; };
+		A96106791D72FB6B006D39D0 /* NSStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A96105FE1D72FB6B006D39D0 /* NSStringAdditions.m */; };
+		A96106961D72FB6C006D39D0 /* PortChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = A96106601D72FB6B006D39D0 /* PortChecker.m */; };
+		A96106971D72FB6C006D39D0 /* Torrent.m in Sources */ = {isa = PBXBuildFile; fileRef = A96106621D72FB6B006D39D0 /* Torrent.m */; };
+		A96106981D72FB6C006D39D0 /* TorrentFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A96106641D72FB6B006D39D0 /* TorrentFetcher.m */; };
+		A96106991D72FB6C006D39D0 /* FileListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A96106681D72FB6B006D39D0 /* FileListNode.m */; };
+		A961069A1D72FB6C006D39D0 /* TrackerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A961066A1D72FB6B006D39D0 /* TrackerNode.m */; };
+		A961069E1D72FBE0006D39D0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A961069C1D72FBE0006D39D0 /* Model.xcdatamodeld */; };
+		A96106AF1D72FC2F006D39D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106A21D72FC2F006D39D0 /* AppDelegate.swift */; };
+		A96106B01D72FC2F006D39D0 /* BrowseAnimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106A31D72FC2F006D39D0 /* BrowseAnimeViewController.swift */; };
+		A96106B11D72FC2F006D39D0 /* TorrentListViewControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106A41D72FC2F006D39D0 /* TorrentListViewControllerTableViewController.swift */; };
+		A96106B21D72FC2F006D39D0 /* VideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106A51D72FC2F006D39D0 /* VideoListViewController.swift */; };
+		A96106B31D72FC2F006D39D0 /* VideoPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106A61D72FC2F006D39D0 /* VideoPlayerController.swift */; };
+		A96106B41D72FC2F006D39D0 /* UITableView_KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106A81D72FC2F006D39D0 /* UITableView_KeyboardNotification.swift */; };
+		A96106B51D72FC2F006D39D0 /* AnimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106AA1D72FC2F006D39D0 /* AnimeService.swift */; };
+		A96106B61D72FC2F006D39D0 /* TorrentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106AB1D72FC2F006D39D0 /* TorrentService.swift */; };
+		A96106B71D72FC2F006D39D0 /* VideoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106AC1D72FC2F006D39D0 /* VideoService.swift */; };
+		A96106B81D72FC2F006D39D0 /* AnimeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106AE1D72FC2F006D39D0 /* AnimeCollectionViewCell.swift */; };
+		A96106BA1D72FC4E006D39D0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A96106B91D72FC4E006D39D0 /* Default-568h@2x.png */; };
+		A96106CF1D731B43006D39D0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A96106BD1D731B43006D39D0 /* Info.plist */; };
+		A96106D01D731B43006D39D0 /* Animes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106BF1D731B43006D39D0 /* Animes+CoreDataProperties.swift */; };
+		A96106D11D731B43006D39D0 /* Animes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C01D731B43006D39D0 /* Animes.swift */; };
+		A96106D21D731B43006D39D0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C21D731B43006D39D0 /* CoreDataService.swift */; };
+		A96106D31D731B43006D39D0 /* NSEntityDescription_Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C41D731B43006D39D0 /* NSEntityDescription_Service.swift */; };
+		A96106D41D731B43006D39D0 /* NSFetchRequest_Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C51D731B43006D39D0 /* NSFetchRequest_Service.swift */; };
+		A96106D51D731B43006D39D0 /* NSManagedObjectContext_Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C61D731B43006D39D0 /* NSManagedObjectContext_Clear.swift */; };
+		A96106D61D731B43006D39D0 /* NamedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C81D731B43006D39D0 /* NamedEntity.swift */; };
+		A96106D71D731B43006D39D0 /* Torrents+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C91D731B43006D39D0 /* Torrents+CoreDataProperties.swift */; };
+		A96106D81D731B43006D39D0 /* Torrents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106CA1D731B43006D39D0 /* Torrents.swift */; };
+		A96106D91D731B43006D39D0 /* Users+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106CB1D731B43006D39D0 /* Users+CoreDataProperties.swift */; };
+		A96106DA1D731B43006D39D0 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106CC1D731B43006D39D0 /* Users.swift */; };
+		A96106DB1D731B43006D39D0 /* Videos+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106CD1D731B43006D39D0 /* Videos+CoreDataProperties.swift */; };
+		A96106DC1D731B43006D39D0 /* Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106CE1D731B43006D39D0 /* Videos.swift */; };
+		A96107081D732586006D39D0 /* libb64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96106FA1D732586006D39D0 /* libb64.a */; };
+		A96107091D732587006D39D0 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96106FB1D732586006D39D0 /* libcrypto.a */; };
+		A961070A1D732587006D39D0 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96106FC1D732586006D39D0 /* libcurl.a */; };
+		A961070B1D732587006D39D0 /* libdht.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96106FD1D732586006D39D0 /* libdht.a */; };
+		A961070C1D732587006D39D0 /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96106FE1D732586006D39D0 /* libevent.a */; };
+		A961070D1D732587006D39D0 /* libevent_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96106FF1D732586006D39D0 /* libevent_core.a */; };
+		A961070E1D732587006D39D0 /* libevent_extra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107001D732586006D39D0 /* libevent_extra.a */; };
+		A961070F1D732587006D39D0 /* libevent_openssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107011D732586006D39D0 /* libevent_openssl.a */; };
+		A96107101D732587006D39D0 /* libevent_pthreads.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107021D732586006D39D0 /* libevent_pthreads.a */; };
+		A96107111D732587006D39D0 /* libminiupnp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107031D732586006D39D0 /* libminiupnp.a */; };
+		A96107121D732587006D39D0 /* libnatpmp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107041D732586006D39D0 /* libnatpmp.a */; };
+		A96107131D732587006D39D0 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107051D732586006D39D0 /* libssl.a */; };
+		A96107141D732587006D39D0 /* libtransmission.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107061D732586006D39D0 /* libtransmission.a */; };
+		A96107151D732587006D39D0 /* libutp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107071D732586006D39D0 /* libutp.a */; };
+		A96107171D7325D3006D39D0 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A96107161D7325D3006D39D0 /* libz.tbd */; };
+		A96107181D732FFF006D39D0 /* Clibxml2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105E51D72FB6B006D39D0 /* Clibxml2.framework */; };
+		A96107191D732FFF006D39D0 /* Clibxml2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105E51D72FB6B006D39D0 /* Clibxml2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A961071B1D733004006D39D0 /* NDHpple.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105E71D72FB6B006D39D0 /* NDHpple.framework */; };
+		A961071C1D733004006D39D0 /* NDHpple.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105E71D72FB6B006D39D0 /* NDHpple.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A961071D1D733007006D39D0 /* OMGHTTPURLRQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105EE1D72FB6B006D39D0 /* OMGHTTPURLRQ.framework */; };
+		A961071E1D733007006D39D0 /* OMGHTTPURLRQ.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105EE1D72FB6B006D39D0 /* OMGHTTPURLRQ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A961071F1D733009006D39D0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105EF1D72FB6B006D39D0 /* PromiseKit.framework */; };
+		A96107201D733009006D39D0 /* PromiseKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105EF1D72FB6B006D39D0 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A96107211D73300C006D39D0 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */; };
+		A96107221D73300C006D39D0 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,21 +97,112 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A961071A1D732FFF006D39D0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A961071C1D733004006D39D0 /* NDHpple.framework in Embed Frameworks */,
+				A96107191D732FFF006D39D0 /* Clibxml2.framework in Embed Frameworks */,
+				A961071E1D733007006D39D0 /* OMGHTTPURLRQ.framework in Embed Frameworks */,
+				A96107201D733009006D39D0 /* PromiseKit.framework in Embed Frameworks */,
+				A96107221D73300C006D39D0 /* SwiftyJSON.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		A96105AC1D71ED71006D39D0 /* TheAnimeTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheAnimeTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A96105AF1D71ED71006D39D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A96105B11D71ED71006D39D0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A96105B41D71ED71006D39D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A96105B71D71ED71006D39D0 /* TheAnimeTool.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TheAnimeTool.xcdatamodel; sourceTree = "<group>"; };
-		A96105B91D71ED71006D39D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A96105B91D71ED71006D39D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		A96105BC1D71ED71006D39D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A96105BE1D71ED71006D39D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A96105BE1D71ED71006D39D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		A96105C31D71ED71006D39D0 /* TheAnimeToolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheAnimeToolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A96105C71D71ED72006D39D0 /* TheAnimeToolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheAnimeToolTests.swift; sourceTree = "<group>"; };
 		A96105C91D71ED72006D39D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A96105CE1D71ED72006D39D0 /* TheAnimeToolUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheAnimeToolUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A96105D21D71ED72006D39D0 /* TheAnimeToolUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheAnimeToolUITests.swift; sourceTree = "<group>"; };
 		A96105D41D71ED72006D39D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A96105E01D72F226006D39D0 /* TheAnimeTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TheAnimeTool-Bridging-Header.h"; sourceTree = "<group>"; };
+		A96105E51D72FB6B006D39D0 /* Clibxml2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Clibxml2.framework; sourceTree = "<group>"; };
+		A96105E71D72FB6B006D39D0 /* NDHpple.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NDHpple.framework; sourceTree = "<group>"; };
+		A96105EA1D72FB6B006D39D0 /* afterlife.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = afterlife.swift; sourceTree = "<group>"; };
+		A96105EB1D72FB6B006D39D0 /* NSNotificationCenter+Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotificationCenter+Promise.swift"; sourceTree = "<group>"; };
+		A96105EC1D72FB6B006D39D0 /* NSObject+Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Promise.swift"; sourceTree = "<group>"; };
+		A96105ED1D72FB6B006D39D0 /* NSURLSession+Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+Promise.swift"; sourceTree = "<group>"; };
+		A96105EE1D72FB6B006D39D0 /* OMGHTTPURLRQ.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OMGHTTPURLRQ.framework; sourceTree = "<group>"; };
+		A96105EF1D72FB6B006D39D0 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PromiseKit.framework; sourceTree = "<group>"; };
+		A96105F11D72FB6B006D39D0 /* SwiftyJSON+NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftyJSON+NSDate.swift"; sourceTree = "<group>"; };
+		A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = "<group>"; };
+		A96105F41D72FB6B006D39D0 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		A96105F51D72FB6B006D39D0 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		A96105F71D72FB6B006D39D0 /* NSDate+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helper.h"; sourceTree = "<group>"; };
+		A96105F81D72FB6B006D39D0 /* NSDate+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helper.m"; sourceTree = "<group>"; };
+		A96105F91D72FB6B006D39D0 /* NSDictionaryAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDictionaryAdditions.h; sourceTree = "<group>"; };
+		A96105FA1D72FB6B006D39D0 /* NSDictionaryAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionaryAdditions.m; sourceTree = "<group>"; };
+		A96105FB1D72FB6B006D39D0 /* NSString+RelativePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RelativePath.h"; sourceTree = "<group>"; };
+		A96105FC1D72FB6B006D39D0 /* NSString+RelativePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RelativePath.m"; sourceTree = "<group>"; };
+		A96105FD1D72FB6B006D39D0 /* NSStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringAdditions.h; sourceTree = "<group>"; };
+		A96105FE1D72FB6B006D39D0 /* NSStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringAdditions.m; sourceTree = "<group>"; };
+		A961065D1D72FB6B006D39D0 /* CFUserNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFUserNotification.h; sourceTree = "<group>"; };
+		A961065E1D72FB6B006D39D0 /* Notifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
+		A961065F1D72FB6B006D39D0 /* PortChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortChecker.h; sourceTree = "<group>"; };
+		A96106601D72FB6B006D39D0 /* PortChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortChecker.m; sourceTree = "<group>"; };
+		A96106611D72FB6B006D39D0 /* Torrent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Torrent.h; sourceTree = "<group>"; };
+		A96106621D72FB6B006D39D0 /* Torrent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Torrent.m; sourceTree = "<group>"; };
+		A96106631D72FB6B006D39D0 /* TorrentFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TorrentFetcher.h; sourceTree = "<group>"; };
+		A96106641D72FB6B006D39D0 /* TorrentFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TorrentFetcher.m; sourceTree = "<group>"; };
+		A96106651D72FB6B006D39D0 /* UIAlertViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAlertViewPrivate.h; sourceTree = "<group>"; };
+		A96106671D72FB6B006D39D0 /* FileListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListNode.h; sourceTree = "<group>"; };
+		A96106681D72FB6B006D39D0 /* FileListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListNode.m; sourceTree = "<group>"; };
+		A96106691D72FB6B006D39D0 /* TrackerNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackerNode.h; sourceTree = "<group>"; };
+		A961066A1D72FB6B006D39D0 /* TrackerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackerNode.m; sourceTree = "<group>"; };
+		A961069D1D72FBE0006D39D0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A96106A21D72FC2F006D39D0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A96106A31D72FC2F006D39D0 /* BrowseAnimeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseAnimeViewController.swift; sourceTree = "<group>"; };
+		A96106A41D72FC2F006D39D0 /* TorrentListViewControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentListViewControllerTableViewController.swift; sourceTree = "<group>"; };
+		A96106A51D72FC2F006D39D0 /* VideoListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListViewController.swift; sourceTree = "<group>"; };
+		A96106A61D72FC2F006D39D0 /* VideoPlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayerController.swift; sourceTree = "<group>"; };
+		A96106A81D72FC2F006D39D0 /* UITableView_KeyboardNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView_KeyboardNotification.swift; sourceTree = "<group>"; };
+		A96106AA1D72FC2F006D39D0 /* AnimeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeService.swift; sourceTree = "<group>"; };
+		A96106AB1D72FC2F006D39D0 /* TorrentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentService.swift; sourceTree = "<group>"; };
+		A96106AC1D72FC2F006D39D0 /* VideoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoService.swift; sourceTree = "<group>"; };
+		A96106AE1D72FC2F006D39D0 /* AnimeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimeCollectionViewCell.swift; sourceTree = "<group>"; };
+		A96106B91D72FC4E006D39D0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A96106BD1D731B43006D39D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A96106BF1D731B43006D39D0 /* Animes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Animes+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A96106C01D731B43006D39D0 /* Animes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animes.swift; sourceTree = "<group>"; };
+		A96106C11D731B43006D39D0 /* CoreDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataService.h; sourceTree = "<group>"; };
+		A96106C21D731B43006D39D0 /* CoreDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		A96106C41D731B43006D39D0 /* NSEntityDescription_Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSEntityDescription_Service.swift; sourceTree = "<group>"; };
+		A96106C51D731B43006D39D0 /* NSFetchRequest_Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSFetchRequest_Service.swift; sourceTree = "<group>"; };
+		A96106C61D731B43006D39D0 /* NSManagedObjectContext_Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext_Clear.swift; sourceTree = "<group>"; };
+		A96106C81D731B43006D39D0 /* NamedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedEntity.swift; sourceTree = "<group>"; };
+		A96106C91D731B43006D39D0 /* Torrents+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Torrents+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A96106CA1D731B43006D39D0 /* Torrents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Torrents.swift; sourceTree = "<group>"; };
+		A96106CB1D731B43006D39D0 /* Users+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Users+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A96106CC1D731B43006D39D0 /* Users.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		A96106CD1D731B43006D39D0 /* Videos+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Videos+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A96106CE1D731B43006D39D0 /* Videos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Videos.swift; sourceTree = "<group>"; };
+		A96106FA1D732586006D39D0 /* libb64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libb64.a; sourceTree = "<group>"; };
+		A96106FB1D732586006D39D0 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		A96106FC1D732586006D39D0 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		A96106FD1D732586006D39D0 /* libdht.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdht.a; sourceTree = "<group>"; };
+		A96106FE1D732586006D39D0 /* libevent.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent.a; sourceTree = "<group>"; };
+		A96106FF1D732586006D39D0 /* libevent_core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_core.a; sourceTree = "<group>"; };
+		A96107001D732586006D39D0 /* libevent_extra.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_extra.a; sourceTree = "<group>"; };
+		A96107011D732586006D39D0 /* libevent_openssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_openssl.a; sourceTree = "<group>"; };
+		A96107021D732586006D39D0 /* libevent_pthreads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libevent_pthreads.a; sourceTree = "<group>"; };
+		A96107031D732586006D39D0 /* libminiupnp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libminiupnp.a; sourceTree = "<group>"; };
+		A96107041D732586006D39D0 /* libnatpmp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libnatpmp.a; sourceTree = "<group>"; };
+		A96107051D732586006D39D0 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		A96107061D732586006D39D0 /* libtransmission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtransmission.a; sourceTree = "<group>"; };
+		A96107071D732586006D39D0 /* libutp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libutp.a; sourceTree = "<group>"; };
+		A96107161D7325D3006D39D0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +210,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A96107171D7325D3006D39D0 /* libz.tbd in Frameworks */,
+				A96107081D732586006D39D0 /* libb64.a in Frameworks */,
+				A96107121D732587006D39D0 /* libnatpmp.a in Frameworks */,
+				A961071B1D733004006D39D0 /* NDHpple.framework in Frameworks */,
+				A96107211D73300C006D39D0 /* SwiftyJSON.framework in Frameworks */,
+				A961070F1D732587006D39D0 /* libevent_openssl.a in Frameworks */,
+				A961070E1D732587006D39D0 /* libevent_extra.a in Frameworks */,
+				A96107111D732587006D39D0 /* libminiupnp.a in Frameworks */,
+				A961070B1D732587006D39D0 /* libdht.a in Frameworks */,
+				A961070D1D732587006D39D0 /* libevent_core.a in Frameworks */,
+				A96107131D732587006D39D0 /* libssl.a in Frameworks */,
+				A96107101D732587006D39D0 /* libevent_pthreads.a in Frameworks */,
+				A961070C1D732587006D39D0 /* libevent.a in Frameworks */,
+				A96107181D732FFF006D39D0 /* Clibxml2.framework in Frameworks */,
+				A96107151D732587006D39D0 /* libutp.a in Frameworks */,
+				A961070A1D732587006D39D0 /* libcurl.a in Frameworks */,
+				A961071F1D733009006D39D0 /* PromiseKit.framework in Frameworks */,
+				A96107141D732587006D39D0 /* libtransmission.a in Frameworks */,
+				A96107091D732587006D39D0 /* libcrypto.a in Frameworks */,
+				A961071D1D733007006D39D0 /* OMGHTTPURLRQ.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,9 +253,13 @@
 		A96105A31D71ED71006D39D0 = {
 			isa = PBXGroup;
 			children = (
+				A96107161D7325D3006D39D0 /* libz.tbd */,
+				A96106B91D72FC4E006D39D0 /* Default-568h@2x.png */,
+				A96105E31D72FB6B006D39D0 /* Component */,
 				A96105AE1D71ED71006D39D0 /* TheAnimeTool */,
 				A96105C61D71ED72006D39D0 /* TheAnimeToolTests */,
 				A96105D11D71ED72006D39D0 /* TheAnimeToolUITests */,
+				A96106BB1D731B43006D39D0 /* CoreDataService */,
 				A96105AD1D71ED71006D39D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,13 +277,9 @@
 		A96105AE1D71ED71006D39D0 /* TheAnimeTool */ = {
 			isa = PBXGroup;
 			children = (
-				A96105AF1D71ED71006D39D0 /* AppDelegate.swift */,
-				A96105B11D71ED71006D39D0 /* ViewController.swift */,
-				A96105B31D71ED71006D39D0 /* Main.storyboard */,
-				A96105B91D71ED71006D39D0 /* Assets.xcassets */,
-				A96105BB1D71ED71006D39D0 /* LaunchScreen.storyboard */,
-				A96105BE1D71ED71006D39D0 /* Info.plist */,
-				A96105B61D71ED71006D39D0 /* TheAnimeTool.xcdatamodeld */,
+				A96106A01D72FC2F006D39D0 /* Source */,
+				A961069B1D72FBCB006D39D0 /* Resources */,
+				A96105E01D72F226006D39D0 /* TheAnimeTool-Bridging-Header.h */,
 			);
 			path = TheAnimeTool;
 			sourceTree = "<group>";
@@ -128,6 +302,255 @@
 			path = TheAnimeToolUITests;
 			sourceTree = "<group>";
 		};
+		A96105E31D72FB6B006D39D0 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				A96105E41D72FB6B006D39D0 /* Clibxml2 */,
+				A96105E61D72FB6B006D39D0 /* NDHpple */,
+				A96105E81D72FB6B006D39D0 /* PromiseKit */,
+				A96105F01D72FB6B006D39D0 /* SwiftyJSON */,
+				A96105F31D72FB6B006D39D0 /* TorrentController */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		A96105E41D72FB6B006D39D0 /* Clibxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				A96105E51D72FB6B006D39D0 /* Clibxml2.framework */,
+			);
+			path = Clibxml2;
+			sourceTree = "<group>";
+		};
+		A96105E61D72FB6B006D39D0 /* NDHpple */ = {
+			isa = PBXGroup;
+			children = (
+				A96105E71D72FB6B006D39D0 /* NDHpple.framework */,
+			);
+			path = NDHpple;
+			sourceTree = "<group>";
+		};
+		A96105E81D72FB6B006D39D0 /* PromiseKit */ = {
+			isa = PBXGroup;
+			children = (
+				A96105E91D72FB6B006D39D0 /* Foundation */,
+				A96105EE1D72FB6B006D39D0 /* OMGHTTPURLRQ.framework */,
+				A96105EF1D72FB6B006D39D0 /* PromiseKit.framework */,
+			);
+			path = PromiseKit;
+			sourceTree = "<group>";
+		};
+		A96105E91D72FB6B006D39D0 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				A96105EA1D72FB6B006D39D0 /* afterlife.swift */,
+				A96105EB1D72FB6B006D39D0 /* NSNotificationCenter+Promise.swift */,
+				A96105EC1D72FB6B006D39D0 /* NSObject+Promise.swift */,
+				A96105ED1D72FB6B006D39D0 /* NSURLSession+Promise.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		A96105F01D72FB6B006D39D0 /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				A96105F11D72FB6B006D39D0 /* SwiftyJSON+NSDate.swift */,
+				A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */,
+			);
+			path = SwiftyJSON;
+			sourceTree = "<group>";
+		};
+		A96105F31D72FB6B006D39D0 /* TorrentController */ = {
+			isa = PBXGroup;
+			children = (
+				A96106F91D732586006D39D0 /* lib_x86_64 */,
+				A96105F41D72FB6B006D39D0 /* Controller.h */,
+				A96105F51D72FB6B006D39D0 /* Controller.m */,
+				A96105F61D72FB6B006D39D0 /* Helpers+Additions */,
+				A961065C1D72FB6B006D39D0 /* Miscallaneous */,
+				A96106661D72FB6B006D39D0 /* Nodes */,
+			);
+			path = TorrentController;
+			sourceTree = "<group>";
+		};
+		A96105F61D72FB6B006D39D0 /* Helpers+Additions */ = {
+			isa = PBXGroup;
+			children = (
+				A96105F71D72FB6B006D39D0 /* NSDate+Helper.h */,
+				A96105F81D72FB6B006D39D0 /* NSDate+Helper.m */,
+				A96105F91D72FB6B006D39D0 /* NSDictionaryAdditions.h */,
+				A96105FA1D72FB6B006D39D0 /* NSDictionaryAdditions.m */,
+				A96105FB1D72FB6B006D39D0 /* NSString+RelativePath.h */,
+				A96105FC1D72FB6B006D39D0 /* NSString+RelativePath.m */,
+				A96105FD1D72FB6B006D39D0 /* NSStringAdditions.h */,
+				A96105FE1D72FB6B006D39D0 /* NSStringAdditions.m */,
+			);
+			path = "Helpers+Additions";
+			sourceTree = "<group>";
+		};
+		A961065C1D72FB6B006D39D0 /* Miscallaneous */ = {
+			isa = PBXGroup;
+			children = (
+				A961065D1D72FB6B006D39D0 /* CFUserNotification.h */,
+				A961065E1D72FB6B006D39D0 /* Notifications.h */,
+				A961065F1D72FB6B006D39D0 /* PortChecker.h */,
+				A96106601D72FB6B006D39D0 /* PortChecker.m */,
+				A96106611D72FB6B006D39D0 /* Torrent.h */,
+				A96106621D72FB6B006D39D0 /* Torrent.m */,
+				A96106631D72FB6B006D39D0 /* TorrentFetcher.h */,
+				A96106641D72FB6B006D39D0 /* TorrentFetcher.m */,
+				A96106651D72FB6B006D39D0 /* UIAlertViewPrivate.h */,
+			);
+			path = Miscallaneous;
+			sourceTree = "<group>";
+		};
+		A96106661D72FB6B006D39D0 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				A96106671D72FB6B006D39D0 /* FileListNode.h */,
+				A96106681D72FB6B006D39D0 /* FileListNode.m */,
+				A96106691D72FB6B006D39D0 /* TrackerNode.h */,
+				A961066A1D72FB6B006D39D0 /* TrackerNode.m */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		A961069B1D72FBCB006D39D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A96105B91D71ED71006D39D0 /* Assets.xcassets */,
+				A96105B31D71ED71006D39D0 /* Main.storyboard */,
+				A96105BB1D71ED71006D39D0 /* LaunchScreen.storyboard */,
+				A96105BE1D71ED71006D39D0 /* Info.plist */,
+				A961069C1D72FBE0006D39D0 /* Model.xcdatamodeld */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		A96106A01D72FC2F006D39D0 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A96106A11D72FC2F006D39D0 /* Controller */,
+				A96106A71D72FC2F006D39D0 /* Extension */,
+				A96106A91D72FC2F006D39D0 /* Service */,
+				A96106AD1D72FC2F006D39D0 /* View */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		A96106A11D72FC2F006D39D0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A96106A21D72FC2F006D39D0 /* AppDelegate.swift */,
+				A96106A31D72FC2F006D39D0 /* BrowseAnimeViewController.swift */,
+				A96106A41D72FC2F006D39D0 /* TorrentListViewControllerTableViewController.swift */,
+				A96106A51D72FC2F006D39D0 /* VideoListViewController.swift */,
+				A96106A61D72FC2F006D39D0 /* VideoPlayerController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		A96106A71D72FC2F006D39D0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A96106A81D72FC2F006D39D0 /* UITableView_KeyboardNotification.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		A96106A91D72FC2F006D39D0 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				A96106AA1D72FC2F006D39D0 /* AnimeService.swift */,
+				A96106AB1D72FC2F006D39D0 /* TorrentService.swift */,
+				A96106AC1D72FC2F006D39D0 /* VideoService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		A96106AD1D72FC2F006D39D0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A96106AE1D72FC2F006D39D0 /* AnimeCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A96106BB1D731B43006D39D0 /* CoreDataService */ = {
+			isa = PBXGroup;
+			children = (
+				A96106BC1D731B43006D39D0 /* Resources */,
+				A96106BE1D731B43006D39D0 /* Source */,
+			);
+			path = CoreDataService;
+			sourceTree = "<group>";
+		};
+		A96106BC1D731B43006D39D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A96106BD1D731B43006D39D0 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A96106BE1D731B43006D39D0 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A96106BF1D731B43006D39D0 /* Animes+CoreDataProperties.swift */,
+				A96106C01D731B43006D39D0 /* Animes.swift */,
+				A96106C11D731B43006D39D0 /* CoreDataService.h */,
+				A96106C21D731B43006D39D0 /* CoreDataService.swift */,
+				A96106C31D731B43006D39D0 /* Extension */,
+				A96106C71D731B43006D39D0 /* Protocol */,
+				A96106C91D731B43006D39D0 /* Torrents+CoreDataProperties.swift */,
+				A96106CA1D731B43006D39D0 /* Torrents.swift */,
+				A96106CB1D731B43006D39D0 /* Users+CoreDataProperties.swift */,
+				A96106CC1D731B43006D39D0 /* Users.swift */,
+				A96106CD1D731B43006D39D0 /* Videos+CoreDataProperties.swift */,
+				A96106CE1D731B43006D39D0 /* Videos.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		A96106C31D731B43006D39D0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A96106C41D731B43006D39D0 /* NSEntityDescription_Service.swift */,
+				A96106C51D731B43006D39D0 /* NSFetchRequest_Service.swift */,
+				A96106C61D731B43006D39D0 /* NSManagedObjectContext_Clear.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		A96106C71D731B43006D39D0 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				A96106C81D731B43006D39D0 /* NamedEntity.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		A96106F91D732586006D39D0 /* lib_x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+				A96106FA1D732586006D39D0 /* libb64.a */,
+				A96106FB1D732586006D39D0 /* libcrypto.a */,
+				A96106FC1D732586006D39D0 /* libcurl.a */,
+				A96106FD1D732586006D39D0 /* libdht.a */,
+				A96106FE1D732586006D39D0 /* libevent.a */,
+				A96106FF1D732586006D39D0 /* libevent_core.a */,
+				A96107001D732586006D39D0 /* libevent_extra.a */,
+				A96107011D732586006D39D0 /* libevent_openssl.a */,
+				A96107021D732586006D39D0 /* libevent_pthreads.a */,
+				A96107031D732586006D39D0 /* libminiupnp.a */,
+				A96107041D732586006D39D0 /* libnatpmp.a */,
+				A96107051D732586006D39D0 /* libssl.a */,
+				A96107061D732586006D39D0 /* libtransmission.a */,
+				A96107071D732586006D39D0 /* libutp.a */,
+			);
+			path = lib_x86_64;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,6 +561,7 @@
 				A96105A81D71ED71006D39D0 /* Sources */,
 				A96105A91D71ED71006D39D0 /* Frameworks */,
 				A96105AA1D71ED71006D39D0 /* Resources */,
+				A961071A1D732FFF006D39D0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -233,7 +657,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A96105BD1D71ED71006D39D0 /* LaunchScreen.storyboard in Resources */,
+				A96106BA1D72FC4E006D39D0 /* Default-568h@2x.png in Resources */,
 				A96105BA1D71ED71006D39D0 /* Assets.xcassets in Resources */,
+				A96106CF1D731B43006D39D0 /* Info.plist in Resources */,
 				A96105B51D71ED71006D39D0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,9 +685,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A96105B21D71ED71006D39D0 /* ViewController.swift in Sources */,
-				A96105B01D71ED71006D39D0 /* AppDelegate.swift in Sources */,
-				A96105B81D71ED71006D39D0 /* TheAnimeTool.xcdatamodeld in Sources */,
+				A96106B31D72FC2F006D39D0 /* VideoPlayerController.swift in Sources */,
+				A96106D51D731B43006D39D0 /* NSManagedObjectContext_Clear.swift in Sources */,
+				A96106961D72FB6C006D39D0 /* PortChecker.m in Sources */,
+				A96106791D72FB6B006D39D0 /* NSStringAdditions.m in Sources */,
+				A96106B41D72FC2F006D39D0 /* UITableView_KeyboardNotification.swift in Sources */,
+				A96106D11D731B43006D39D0 /* Animes.swift in Sources */,
+				A96106D81D731B43006D39D0 /* Torrents.swift in Sources */,
+				A96106B71D72FC2F006D39D0 /* VideoService.swift in Sources */,
+				A96106D31D731B43006D39D0 /* NSEntityDescription_Service.swift in Sources */,
+				A96106B21D72FC2F006D39D0 /* VideoListViewController.swift in Sources */,
+				A96106D91D731B43006D39D0 /* Users+CoreDataProperties.swift in Sources */,
+				A961066D1D72FB6B006D39D0 /* afterlife.swift in Sources */,
+				A96106991D72FB6C006D39D0 /* FileListNode.m in Sources */,
+				A96106D61D731B43006D39D0 /* NamedEntity.swift in Sources */,
+				A961066F1D72FB6B006D39D0 /* NSObject+Promise.swift in Sources */,
+				A96106B11D72FC2F006D39D0 /* TorrentListViewControllerTableViewController.swift in Sources */,
+				A96106D41D731B43006D39D0 /* NSFetchRequest_Service.swift in Sources */,
+				A96106B01D72FC2F006D39D0 /* BrowseAnimeViewController.swift in Sources */,
+				A96106751D72FB6B006D39D0 /* Controller.m in Sources */,
+				A96106771D72FB6B006D39D0 /* NSDictionaryAdditions.m in Sources */,
+				A96106701D72FB6B006D39D0 /* NSURLSession+Promise.swift in Sources */,
+				A96106D01D731B43006D39D0 /* Animes+CoreDataProperties.swift in Sources */,
+				A96106B51D72FC2F006D39D0 /* AnimeService.swift in Sources */,
+				A96106DB1D731B43006D39D0 /* Videos+CoreDataProperties.swift in Sources */,
+				A96106731D72FB6B006D39D0 /* SwiftyJSON+NSDate.swift in Sources */,
+				A96106971D72FB6C006D39D0 /* Torrent.m in Sources */,
+				A96106DA1D731B43006D39D0 /* Users.swift in Sources */,
+				A96106B81D72FC2F006D39D0 /* AnimeCollectionViewCell.swift in Sources */,
+				A96106D21D731B43006D39D0 /* CoreDataService.swift in Sources */,
+				A96106981D72FB6C006D39D0 /* TorrentFetcher.m in Sources */,
+				A96106D71D731B43006D39D0 /* Torrents+CoreDataProperties.swift in Sources */,
+				A961069A1D72FB6C006D39D0 /* TrackerNode.m in Sources */,
+				A96106761D72FB6B006D39D0 /* NSDate+Helper.m in Sources */,
+				A96106781D72FB6B006D39D0 /* NSString+RelativePath.m in Sources */,
+				A961069E1D72FBE0006D39D0 /* Model.xcdatamodeld in Sources */,
+				A96106AF1D72FC2F006D39D0 /* AppDelegate.swift in Sources */,
+				A96106DC1D731B43006D39D0 /* Videos.swift in Sources */,
+				A96106B61D72FC2F006D39D0 /* TorrentService.swift in Sources */,
+				A961066E1D72FB6B006D39D0 /* NSNotificationCenter+Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +765,7 @@
 				A96105B41D71ED71006D39D0 /* Base */,
 			);
 			name = Main.storyboard;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A96105BB1D71ED71006D39D0 /* LaunchScreen.storyboard */ = {
@@ -311,6 +774,7 @@
 				A96105BC1D71ED71006D39D0 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -405,10 +869,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = TheAnimeTool/Info.plist;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Component/**",
+					"$(PROJECT_DIR)/Component/Clibxml2",
+					"$(PROJECT_DIR)/Component/NDHpple",
+					"$(PROJECT_DIR)/Component/PromiseKit",
+					"$(PROJECT_DIR)/Component/SwiftyJSON",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/include/libxml2",
+					"$(SRCROOT)/Component/TorrentController/include",
+					"$(SRCROOT)/Component/TorrentController",
+				);
+				INFOPLIST_FILE = TheAnimeTool/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Component/TorrentController/lib_x86_64",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.ToolS.TheAnimeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TheAnimeTool/TheAnimeTool-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -416,10 +900,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = TheAnimeTool/Info.plist;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Component/**",
+					"$(PROJECT_DIR)/Component/Clibxml2",
+					"$(PROJECT_DIR)/Component/NDHpple",
+					"$(PROJECT_DIR)/Component/PromiseKit",
+					"$(PROJECT_DIR)/Component/SwiftyJSON",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/include/libxml2",
+					"$(SRCROOT)/Component/TorrentController/include",
+					"$(SRCROOT)/Component/TorrentController",
+				);
+				INFOPLIST_FILE = TheAnimeTool/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Component/TorrentController/lib_x86_64",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.ToolS.TheAnimeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TheAnimeTool/TheAnimeTool-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -508,13 +1011,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A96105B61D71ED71006D39D0 /* TheAnimeTool.xcdatamodeld */ = {
+		A961069C1D72FBE0006D39D0 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				A96105B71D71ED71006D39D0 /* TheAnimeTool.xcdatamodel */,
+				A961069D1D72FBE0006D39D0 /* Model.xcdatamodel */,
 			);
-			currentVersion = A96105B71D71ED71006D39D0 /* TheAnimeTool.xcdatamodel */;
-			path = TheAnimeTool.xcdatamodeld;
+			currentVersion = A961069D1D72FBE0006D39D0 /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = Resources/Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
