@@ -101,7 +101,10 @@ public class TorrentService: NSObject {
         let torrentD = doc.searchWithXPathQuery(self.TorrentDXpath).map{Int($0.firstChild?.content ?? "0") ?? 0}
         let torrentSize = doc.searchWithXPathQuery(self.TorrentSizeXpath).map{ (item) -> Float in
             let sizeStr = item.firstChild?.content ?? "0 Mib"
-            return Float(sizeStr.substringToIndex(sizeStr.endIndex.advancedBy(-4))) ?? 0
+            var convertionFactor: Float = 1
+            convertionFactor = sizeStr.containsString("GiB") ? 1024 : convertionFactor
+            convertionFactor = sizeStr.containsString("TiB") ? 1024 * 1024 : convertionFactor
+            return (Float(sizeStr.substringToIndex(sizeStr.endIndex.advancedBy(-4))) ?? 0) * convertionFactor
         }
         let torrentURL = doc.searchWithXPathQuery(self.TorrentDownloadXpath).map{ (item) -> String? in
             guard let url = item.attributes["href"] as? String else { return nil }
