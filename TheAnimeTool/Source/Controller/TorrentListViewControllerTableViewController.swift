@@ -12,8 +12,8 @@ import PromiseKit
 import NDHpple
 
 class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
-    let defaultPredicate = NSPredicate(format: "torrentFlagTemp == YES")
-    let defaultSortDescriptor = NSSortDescriptor(key: "torrentOrder", ascending: true)
+    var defaultPredicateString = ""
+    var defaultSortDescriptor = NSSortDescriptor(key: "torrentTempOrder", ascending: true)
     
     var animeEntity: Animes? = nil
     var torrentResultsController: NSFetchedResultsController? = nil
@@ -24,15 +24,14 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         super.viewDidLoad()
         print(self.animeEntity)
         
-        //initialize some settings for visual elements
-        torrentSearchBar.enablesReturnKeyAutomatically = false
-        
-        //initialize fetched results controller
+        //initialize pre-requisites for fetched results controller
         let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
-        fetchRequest.predicate = self.defaultPredicate
         fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
-        self.torrentResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        
+        //initialize some settings for visual elements
+        torrentSearchBar.enablesReturnKeyAutomatically = false
         
         //setup listeners for data change
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleLocalTorrentDidUpdate), name: TorrentService.LocalTorrentsDidUpdateNotification, object: nil)
@@ -44,10 +43,35 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         
-        //fetch data from Nyaa server
-        let searchString = TorrentService.UtilMakeShortSearchString(self.animeEntity?.animeTitleEnglish ?? "")
-        print(searchString)
-        TorrentService.sharedTorrentService.UpdateTempTorrentsWith(searchString, sortBy: TorrentService.SortBy.Seeders)
+        //split saved and browse anime
+        if let animeEntity = self.animeEntity{
+            //initialize torrent results controller
+            self.defaultPredicateString = "torrentFlagTemp == YES"
+            fetchRequest.predicate = NSPredicate(format: self.defaultPredicateString)
+            self.torrentResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            
+            //fetch data from Nyaa server according to the selected anime
+            let searchString = TorrentService.UtilMakeShortSearchString(animeEntity.animeTitleEnglish ?? "")
+            print(searchString)
+            TorrentService.sharedTorrentService.UpdateTempTorrentsWith(searchString, sortBy: TorrentService.SortBy.Seeders)
+        }else{
+            //initialize fetched results controller
+            self.defaultPredicateString = "torrentFlagSaved == YES"
+            fetchRequest.predicate = NSPredicate(format: self.defaultPredicateString)
+            let context = CoreDataService.sharedCoreDataService.mainQueueContext
+            self.torrentResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            
+            self.UpdateFetchedResults()
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if !self.isMovingToParentViewController(){
+            self.UpdateFetchedResults()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.torrentTableView.reloadData()
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -75,9 +99,13 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
+     // MARK: - Search bar delegates
+    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.FilterResultsWithString(searchText)
-        self.torrentTableView.reloadData()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.torrentTableView.reloadData()
+        }
     }
 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -110,6 +138,8 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         return cell
     }
 
+    // MARK: - Helper functions
+    
     private func UpdateFetchedResults(){
         do{
             try torrentResultsController?.performFetch()
@@ -122,14 +152,14 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
         if searchString == "" {
-            fetchRequest.predicate = self.defaultPredicate
+            fetchRequest.predicate = NSPredicate(format: self.defaultPredicateString)
             fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
         }else{
             let separatedString = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             var subPredicates = [NSPredicate]()
             for subString in separatedString{
                 guard subString.characters.count > 0 else { continue }
-                subPredicates.append(NSPredicate(format: "torrentName CONTAINS[cd] \"\(subString)\" && torrentFlagTemp == YES"))
+                subPredicates.append(NSPredicate(format: "torrentName CONTAINS[cd] \"\(subString)\" && \(self.defaultPredicateString)"))
             }
             let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
             fetchRequest.predicate = filterPredicate
@@ -139,9 +169,13 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         UpdateFetchedResults()
     }
     
+    // MARK: - Notification handlers
+    
     @objc private func HandleLocalTorrentDidUpdate(notification: NSNotification){
-        UpdateFetchedResults()
-        self.torrentTableView.reloadData()
+        self.UpdateFetchedResults()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.torrentTableView.reloadData()
+        }
     }
     @objc private func HandleKeyboardWillShow(noti: NSNotification){
         self.torrentTableView.adjustInsetsForWillShowKeyboardNotification(noti)

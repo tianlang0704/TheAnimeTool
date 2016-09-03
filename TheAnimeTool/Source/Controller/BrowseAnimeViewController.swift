@@ -41,7 +41,7 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         let sortDescriptor = NSSortDescriptor(key: "animeNextEpsTime", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         self.animeResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        self.UpdateFetchedResults()
+        //self.UpdateFetchedResults()
         
         //setup listeners for data change
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleLocalAnimeDidUpdate), name: AnimeService.LocalAnimeDidUpdateNotification, object: nil)
@@ -107,13 +107,13 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         let score = anime.animeScore ?? 0
         cell.shortDescription.text = String(format: "%@\nScore: %@", anime.animeTitleEnglish ?? "", score == 0 ? "N/A" : String(score))
         
-        dispatch_async(dispatch_get_main_queue()) {cell.image.alpha = 0}
         UrlIf: if let urlString = anime.animeImgM {
             guard let url = NSURL(string: urlString) else { break UrlIf}
             
             let task = NSURLSession.sharedSession().dataTaskWithURL(url){(data, response, error) in
                 guard let imgData = data else { return }
                 let image = UIImage(data: imgData)
+                cell.image.alpha = 0
                 dispatch_async(dispatch_get_main_queue()) {
                     cell.image.image = image
                     let animation = CABasicAnimation(keyPath: "opacity")
@@ -128,6 +128,7 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         }
         
         //adjust cell visuals
+        //cell.image.alpha = 0
         cell.shortDescription.layoutIfNeeded()
         cell.shortDescription.setContentOffset(CGPoint(x: 0, y: 5), animated: false)
         cell.shortDescription.textContainer.lineBreakMode = NSLineBreakMode.ByCharWrapping
@@ -175,7 +176,9 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
     
     @objc private func HandleLocalAnimeDidUpdate(notification: NSNotification){
         UpdateFetchedResults()
-        self.animeCollectionView.reloadData()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.animeCollectionView.reloadData()
+        }
     }
     
     @objc private func HandleLocalAnimeUpdateFailed(notification:NSNotification){
@@ -183,7 +186,9 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         switch error.code {
         case 4: //AnimeService.AnimeError.EmptyResult
             self.UpdateFetchedResults()
-            self.animeCollectionView.reloadData()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.animeCollectionView.reloadData()
+            }
             break
         default:
             break

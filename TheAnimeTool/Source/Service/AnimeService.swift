@@ -12,6 +12,8 @@ import SwiftyJSON
 import CoreData
 
 public class AnimeService: NSObject {
+    typealias CompletionHandler = () -> Void
+    
     enum AnimeError: ErrorType{
         case InvalidToken
         case InvalidIconURL
@@ -19,55 +21,57 @@ public class AnimeService: NSObject {
         case ErrorSavingCoreData
         case EmtpyResult
     }
-    
+    static let sharedAnimeService = AnimeService()
     static let LocalAnimeWillUpdateNotification = "LocalAnimeWillUpdateNotification"
     static let LocalAnimeDidUpdateNotification = "LocalAnimeDidUpdateNotification"
     //This notification will return an NSError as the object
     static let LocalAnimeUpdateFailedNotification = "LocalAnimeUpdateFailedNotification"
     
-    var tokenString: String? = nil
+    var tokenString: String = ""
     var tokenExpire: NSDate = NSDate(timeIntervalSince1970: 0)
     var insertIndexForTempEntries = 0
     
-    override init(){
+    override private init(){
         super.init()
         self.LoadTokenAndTime()
     }
     
     func UpdateTempWithAiringAnimes(){
-        self.ClearTempAnimes()
-        //Update anilist API token first, then get updated data on airing animes
-        UpdateTokenIfNeeded(){ service in
-            firstly{
-                return NSURLSession.GET("https://anilist.co/api/browse/anime",
-                    query: ["access_token": "\(service.tokenString!)",
-                    "status": "Currently Airing",
-                    "type": "Tv",
-                    "full_page": "true",
-                    "airing_data": "true"])
-            }.then{ data -> Void in
-                let animeJSON = JSON(data: data)
-                do{ try self.UpdateLocalAnimes(animeJSON, isTemp: true) } catch(let error){ throw error }
-            }.error{ error in
-                NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeUpdateFailedNotification, object: error as NSError)
-                print("Error getting anime data: \(error)")
+        self.ClearTempAnimes(){
+            //Update anilist API token first, then get updated data on airing animes
+            self.UpdateTokenIfNeeded(){ service in
+                firstly{
+                    return NSURLSession.GET("https://anilist.co/api/browse/anime",
+                        query: ["access_token": "\(service.tokenString)",
+                            "status": "Currently Airing",
+                            "type": "Tv",
+                            "full_page": "true",
+                            "airing_data": "true"])
+                }.then{ data -> Void in
+                        let animeJSON = JSON(data: data)
+                        do{ try self.UpdateLocalAnimes(animeJSON, isTemp: true) } catch(let error){ throw error }
+                }.error{ error in
+                        NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeUpdateFailedNotification, object: error as NSError)
+                        print("Error getting anime data: \(error)")
+                }
             }
         }
     }
     
     func UpdateTempAnimesWithSearchString(searchStr: String){
-        self.ClearTempAnimes()
-        //Update anilist API token first, then search for anime
-        UpdateTokenIfNeeded(){ service in
-            firstly{
-                return NSURLSession.GET("https://anilist.co/api/anime/search/\(searchStr.stringByReplacingOccurrencesOfString(" ", withString: "+"))",
-                    query: ["access_token": "\(service.tokenString!)"])
-                }.then{ data -> Void in
-                    let animeJSON = JSON(data: data)
-                    do{ try self.UpdateLocalAnimes(animeJSON, isTemp: true) } catch(let error){ throw error }
-                }.error{ error in
-                    NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeUpdateFailedNotification, object: error as NSError)
-                    print("Error getting anime data: \(error)")
+        self.ClearTempAnimes(){
+            //Update anilist API token first, then search for anime
+            self.UpdateTokenIfNeeded(){ service in
+                firstly{
+                    return NSURLSession.GET("https://anilist.co/api/anime/search/\(searchStr.stringByReplacingOccurrencesOfString(" ", withString: "+"))",
+                        query: ["access_token": "\(service.tokenString)"])
+                    }.then{ data -> Void in
+                        let animeJSON = JSON(data: data)
+                        do{ try self.UpdateLocalAnimes(animeJSON, isTemp: true) } catch(let error){ throw error }
+                    }.error{ error in
+                        NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeUpdateFailedNotification, object: error as NSError)
+                        print("Error getting anime data: \(error)")
+                }
             }
         }
     }
@@ -83,7 +87,7 @@ public class AnimeService: NSObject {
                         "client_id": "tianlang0704-of3vo",
                         "client_secret": "YdmxkUXtzmM2J4JGeRqPee4"])
             }else{
-                let dataJSON = String(format:"{\"access_token\":\"%@\"}", tokenString!).dataUsingEncoding(NSUTF8StringEncoding)!
+                let dataJSON = String(format:"{\"access_token\":\"%@\"}", self.tokenString).dataUsingEncoding(NSUTF8StringEncoding)!
                 return URLDataPromise.go(NSURLRequest(URL: NSURL(string: "http://dummy.co")!)) { completionHandler in
                     completionHandler(dataJSON, nil, nil)
                 }
@@ -96,7 +100,7 @@ public class AnimeService: NSObject {
                 self.tokenString = tokenString
                 self.SaveTokenAndTime()
             }
-            print(tokenString)
+            print(self.tokenString)
             print(self.tokenExpire)
             callback(animeService: self)
         }
@@ -115,54 +119,59 @@ public class AnimeService: NSObject {
         let fetchRequest = NSFetchRequest(namedEntity: Animes.self)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "animeAnilistId", ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "animeStatus == %@", "currently airing")
-        guard let fetchedAnimes = try? context.executeFetchRequest(fetchRequest) as? [Animes] ?? [] else { return }
+        context.performBlock(){
+            guard let fetchedAnimes = try? context.executeFetchRequest(fetchRequest) as? [Animes] ?? [] else { return }
         
-        NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeWillUpdateNotification, object: self)
-        
-        for animeJSON in animesJSONArray{
-            print(animeJSON.description)
-            
-            var targetAnime: Animes
-            if let found = fetchedAnimes.map({$0.animeAnilistId as! Int}).indexOf(animeJSON["id"].intValue){
-                targetAnime = fetchedAnimes[found]
-            }else{
-                targetAnime = NSEntityDescription.insertNewObjectForNamedEntity(Animes.self, inManagedObjectContext: context)
-                guard let anilistId = animeJSON["id"].int else { continue }
-                targetAnime.animeAnilistId = anilistId
+            NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeWillUpdateNotification, object: self)
+            for animeJSON in animesJSONArray{
+                print(animeJSON.description)
+                
+                var targetAnime: Animes
+                if let found = fetchedAnimes.map({$0.animeAnilistId as! Int}).indexOf(animeJSON["id"].intValue){
+                    targetAnime = fetchedAnimes[found]
+                }else{
+                    targetAnime = NSEntityDescription.insertNewObjectForNamedEntity(Animes.self, inManagedObjectContext: context)
+                    guard let anilistId = animeJSON["id"].int else { continue }
+                    targetAnime.animeAnilistId = anilistId
+                }
+                targetAnime.animeImgL = animeJSON["image_url_lge"].string
+                targetAnime.animeImgM = animeJSON["image_url_med"].string
+                targetAnime.animeImgS = animeJSON["image_url_sml"].string
+                targetAnime.animePopularity = animeJSON["popularity"].int
+                targetAnime.animeScore = animeJSON["average_score"].float
+                targetAnime.animeStatus = animeJSON["airing_status"].string
+                targetAnime.animeTitleEnglish = animeJSON["title_english"].string
+                targetAnime.animeTitleJapanese = animeJSON["title_japanese"].string
+                targetAnime.animeTotalEps = animeJSON["total_episodes"].int
+                targetAnime.animeNextEps = animeJSON["airing"]["next_episode"].int
+                targetAnime.animeNextEpsTime = animeJSON["airing"]["time"].date
+                targetAnime.animeFlagTemp = NSNumber(bool: isTemp)
+                targetAnime.animeOrder = self.insertIndexForTempEntries
+                self.insertIndexForTempEntries += 1
             }
-            targetAnime.animeImgL = animeJSON["image_url_lge"].string
-            targetAnime.animeImgM = animeJSON["image_url_med"].string
-            targetAnime.animeImgS = animeJSON["image_url_sml"].string
-            targetAnime.animePopularity = animeJSON["popularity"].int
-            targetAnime.animeScore = animeJSON["average_score"].float
-            targetAnime.animeStatus = animeJSON["airing_status"].string
-            targetAnime.animeTitleEnglish = animeJSON["title_english"].string
-            targetAnime.animeTitleJapanese = animeJSON["title_japanese"].string
-            targetAnime.animeTotalEps = animeJSON["total_episodes"].int
-            targetAnime.animeNextEps = animeJSON["airing"]["next_episode"].int
-            targetAnime.animeNextEpsTime = animeJSON["airing"]["time"].date
-            targetAnime.animeFlagTemp = NSNumber(bool: isTemp)
-            targetAnime.animeOrder = self.insertIndexForTempEntries
-            self.insertIndexForTempEntries += 1
+            context.SaveRecursivelyToPersistentStorage(){
+                NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeDidUpdateNotification, object: self)
+            }
         }
-        
-        do{ try context.save()} catch {
-            print("Error saving new anime information")
-            throw AnimeError.ErrorSavingCoreData
-        }
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeDidUpdateNotification, object: self)
     }
     
-    func ClearTempAnimes(){
+    func ClearTempAnimes(completionHandler: CompletionHandler = {}){
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         let request = NSFetchRequest(namedEntity: Animes.self)
         request.predicate = NSPredicate(format: "animeFlagTemp == YES")
-        context.deleteAllData(request)
-        self.insertIndexForTempEntries = 0
+        context.performBlock(){
+            context.deleteAllData(request)
+            context.SaveRecursivelyToPersistentStorage(){
+                self.insertIndexForTempEntries = 0
+                completionHandler()
+            }
+        }
     }
     
     func SaveTokenAndTime(){
+        guard self.tokenString != "" else { return }
+        guard self.tokenExpire.timeIntervalSince1970 != 0 else { return }
+        
         NSUserDefaults.standardUserDefaults().setObject(self.tokenString, forKey: "AnilistTokenString")
         NSUserDefaults.standardUserDefaults().setDouble(self.tokenExpire.timeIntervalSince1970, forKey: "AnilistTokenExpire")
     }
@@ -175,6 +184,4 @@ public class AnimeService: NSObject {
         self.tokenExpire = NSDate(timeIntervalSince1970: tokenExpire)
         self.tokenString = tokenString
     }
-    
-    static let sharedAnimeService = AnimeService()
 }

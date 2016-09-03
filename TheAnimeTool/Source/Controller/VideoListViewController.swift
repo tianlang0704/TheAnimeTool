@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class VideoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class VideoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate/*, NSFetchedResultsControllerDelegate*/ {
     var torrentEntity: Torrents? = nil
     var videoResultsController: NSFetchedResultsController? = nil
     var videoService: VideoService? = nil
@@ -37,7 +37,6 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
         //update local video list from torrent
         if let targetTorrent = self.torrentEntity {
             videoService = VideoService(torrentEntity: targetTorrent)
-            videoService!.UpdateLocalVideo()
         }
     }
     
@@ -61,7 +60,7 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillDisappear(animated: Bool) {
         if self.isMovingFromParentViewController(){
             super.viewWillDisappear(animated)
-            self.videoService?.ClearCurrentTorrentEntityAndVideos()
+            self.videoService?.ClearCurrentVideoEntities()
             self.stopUpdatingVideoTable = true
         }
     }
@@ -74,45 +73,31 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Table view data source
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return self.videoResultsController?.sections?.count ?? 0
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.videoResultsController?.sections?[section].objects?.count ?? 0
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("VideoProtoCell1", forIndexPath: indexPath)
-        let video = self.videoResultsController?.objectAtIndexPath(indexPath) as! Videos
-        
-        cell.selectionStyle = .None
-        cell.textLabel?.text = video.videoName ?? ""
-        cell.detailTextLabel?.text = "\(video.videoSize ?? 0)MB"
-        
-        guard let vs = self.videoService else { return cell }
-        guard let index = video.videoIndex as? UInt else { return cell }
-        let isDoNotDownload = vs.CheckIsDoNotDownloadForFileIndex(index) ?? true
-        if !isDoNotDownload {
-            let progress = vs.UpdateProgressForFileIndex(index)
-            cell.detailTextLabel?.text?.appendContentsOf(" Progress:\(progress*100)%")
-        }else{
-            cell.detailTextLabel?.text?.appendContentsOf(" - Tap to start downloading")
-        }
-        
-        return cell
+        return self.ConfigureCell(cell, indexPath: indexPath)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let video = self.videoResultsController?.objectAtIndexPath(indexPath) as! Videos
-        guard let vs = self.videoService else { return }
         guard let index = video.videoIndex else { return }
-        if vs.CheckIsDoNotDownloadForFileIndex(UInt(index)) ?? false {
-            vs.SetDoNotDownloadForFileIndex(UInt(index), flag: false)
-            dispatch_async(dispatch_get_main_queue(), {
-                self.videoTableView.reloadData()
-            })
+        guard let vs = self.videoService else { return }
+        
+        if vs.StartDownloadingVideoAtIndex(index.unsignedIntegerValue){
+            vs.torrentEntity.torrentFlagSaved = NSNumber(bool: true)
+            
+            CoreDataService.sharedCoreDataService.mainQueueContext.SaveRecursivelyToPersistentStorage(){
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.videoTableView.reloadData()
+                }
+            }
         }
     }
     
@@ -124,7 +109,7 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
             guard let video = self.videoResultsController?.objectAtIndexPath(indexPath) as? Videos else { return }
             guard let videoIndex = video.videoIndex else { return }
             guard let vs = self.videoService else { return }
-            vs.UpdateFilePathForFileIndex(UInt(videoIndex))
+            vs.UpdateFilePathForFileIndexAndWait(UInt(videoIndex))
             let destination = segue.destinationViewController as! VideoPlayerController
             destination.videoEntity = video
         }
@@ -139,53 +124,92 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
         
         return true
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-    private func UpdateFetchedResults(){
-        do{
-            try self.videoResultsController?.performFetch()
-        }catch{
-            print("Error fetching torrents from core data")
-        }
-    }
+    
+    //MARK: - Fetch results controller delegates
+//    
+//    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+//        self.videoTableView.beginUpdates()
+//    }
+//    
+//    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+//        switch type {
+//        case .Insert:
+//            self.videoTableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+//        case .Delete:
+//            self.videoTableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+//        default:
+//            break
+//        }
+//    }
+//    
+//    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+//        switch(type) {
+//        case .Insert:
+//            guard let targetIndexPath = newIndexPath else { break }
+//            self.videoTableView.insertRowsAtIndexPaths([targetIndexPath], withRowAnimation: .Fade)
+//            break
+//            
+//        case .Delete:
+//            guard let targetIndexPath = indexPath else { break }
+//            self.videoTableView.deleteRowsAtIndexPaths([targetIndexPath], withRowAnimation: .Fade)
+//            break
+//            
+//        case .Update:
+//            guard let targetIndexPath = indexPath else { break }
+//            guard let targetCell = self.videoTableView.cellForRowAtIndexPath(targetIndexPath) else { break }
+//            self.ConfigureCell(targetCell, indexPath: targetIndexPath)
+//            break
+//            
+//        case .Move:
+//            guard let fromIndexPath = newIndexPath else { break }
+//            guard let toIndexPath = indexPath else { break }
+//            self.videoTableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Fade)
+//            self.videoTableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Fade)
+//            break
+//        }
+//    }
+//    
+//    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+//        self.videoTableView.endUpdates()
+//    }
+    
+    
+    //MARK: - Notificatoin handler functions
     
     @objc private func HandleLocalVideosDidUpdate(notification: NSNotification){
         self.UpdateFetchedResults()
         dispatch_async(dispatch_get_main_queue(), {
             self.videoTableView.reloadData()
         })
+    }
+    
+
+    //MARK: - Helper functions
+    
+    private func ConfigureCell(cell: UITableViewCell, indexPath: NSIndexPath) -> UITableViewCell{
+        guard let video = self.videoResultsController?.objectAtIndexPath(indexPath) as? Videos else { return cell }
+        
+        cell.textLabel?.text = video.videoName ?? ""
+        
+        guard let vs = self.videoService else { return cell }
+        guard let index = video.videoIndex as? UInt else { return cell }
+        let isDoNotDownload = vs.CheckIsDoNotDownloadForFileIndex(index) ?? true
+        if !isDoNotDownload {
+            vs.UpdateProgressForFileIndex(index){progress in
+                cell.detailTextLabel?.text = "\(video.videoSize ?? 0)MB Progress:\(progress*100)%"
+            }
+        }else{
+            cell.detailTextLabel?.text = "\(video.videoSize ?? 0)MB - Tap to start downloading"
+        }
+        
+        return cell
+    }
+    
+    private func UpdateFetchedResults(){
+        do{
+            try self.videoResultsController?.performFetch()
+        }catch{
+            print("Error fetching torrents from core data")
+        }
     }
 }

@@ -45,7 +45,7 @@
 		A96106D21D731B43006D39D0 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C21D731B43006D39D0 /* CoreDataService.swift */; };
 		A96106D31D731B43006D39D0 /* NSEntityDescription_Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C41D731B43006D39D0 /* NSEntityDescription_Service.swift */; };
 		A96106D41D731B43006D39D0 /* NSFetchRequest_Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C51D731B43006D39D0 /* NSFetchRequest_Service.swift */; };
-		A96106D51D731B43006D39D0 /* NSManagedObjectContext_Clear.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C61D731B43006D39D0 /* NSManagedObjectContext_Clear.swift */; };
+		A96106D51D731B43006D39D0 /* NSManagedObjectContext_Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C61D731B43006D39D0 /* NSManagedObjectContext_Helpers.swift */; };
 		A96106D61D731B43006D39D0 /* NamedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C81D731B43006D39D0 /* NamedEntity.swift */; };
 		A96106D71D731B43006D39D0 /* Torrents+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106C91D731B43006D39D0 /* Torrents+CoreDataProperties.swift */; };
 		A96106D81D731B43006D39D0 /* Torrents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96106CA1D731B43006D39D0 /* Torrents.swift */; };
@@ -78,6 +78,7 @@
 		A96107201D733009006D39D0 /* PromiseKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105EF1D72FB6B006D39D0 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96107211D73300C006D39D0 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */; };
 		A96107221D73300C006D39D0 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A96DFE151D74A57100E8C010 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DFE141D74A57100E8C010 /* UserService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,7 +181,7 @@
 		A96106C21D731B43006D39D0 /* CoreDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		A96106C41D731B43006D39D0 /* NSEntityDescription_Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSEntityDescription_Service.swift; sourceTree = "<group>"; };
 		A96106C51D731B43006D39D0 /* NSFetchRequest_Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSFetchRequest_Service.swift; sourceTree = "<group>"; };
-		A96106C61D731B43006D39D0 /* NSManagedObjectContext_Clear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext_Clear.swift; sourceTree = "<group>"; };
+		A96106C61D731B43006D39D0 /* NSManagedObjectContext_Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContext_Helpers.swift; sourceTree = "<group>"; };
 		A96106C81D731B43006D39D0 /* NamedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedEntity.swift; sourceTree = "<group>"; };
 		A96106C91D731B43006D39D0 /* Torrents+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Torrents+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		A96106CA1D731B43006D39D0 /* Torrents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Torrents.swift; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 		A96107061D732586006D39D0 /* libtransmission.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtransmission.a; sourceTree = "<group>"; };
 		A96107071D732586006D39D0 /* libutp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libutp.a; sourceTree = "<group>"; };
 		A96107161D7325D3006D39D0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		A96DFE141D74A57100E8C010 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -464,6 +466,7 @@
 				A96106AA1D72FC2F006D39D0 /* AnimeService.swift */,
 				A96106AB1D72FC2F006D39D0 /* TorrentService.swift */,
 				A96106AC1D72FC2F006D39D0 /* VideoService.swift */,
+				A96DFE141D74A57100E8C010 /* UserService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -517,7 +520,7 @@
 			children = (
 				A96106C41D731B43006D39D0 /* NSEntityDescription_Service.swift */,
 				A96106C51D731B43006D39D0 /* NSFetchRequest_Service.swift */,
-				A96106C61D731B43006D39D0 /* NSManagedObjectContext_Clear.swift */,
+				A96106C61D731B43006D39D0 /* NSManagedObjectContext_Helpers.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -686,7 +689,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A96106B31D72FC2F006D39D0 /* VideoPlayerController.swift in Sources */,
-				A96106D51D731B43006D39D0 /* NSManagedObjectContext_Clear.swift in Sources */,
+				A96106D51D731B43006D39D0 /* NSManagedObjectContext_Helpers.swift in Sources */,
 				A96106961D72FB6C006D39D0 /* PortChecker.m in Sources */,
 				A96106791D72FB6B006D39D0 /* NSStringAdditions.m in Sources */,
 				A96106B41D72FC2F006D39D0 /* UITableView_KeyboardNotification.swift in Sources */,
@@ -721,6 +724,7 @@
 				A96106781D72FB6B006D39D0 /* NSString+RelativePath.m in Sources */,
 				A961069E1D72FBE0006D39D0 /* Model.xcdatamodeld in Sources */,
 				A96106AF1D72FC2F006D39D0 /* AppDelegate.swift in Sources */,
+				A96DFE151D74A57100E8C010 /* UserService.swift in Sources */,
 				A96106DC1D731B43006D39D0 /* Videos.swift in Sources */,
 				A96106B61D72FC2F006D39D0 /* TorrentService.swift in Sources */,
 				A961066E1D72FB6B006D39D0 /* NSNotificationCenter+Promise.swift in Sources */,
@@ -991,6 +995,7 @@
 				A96105D91D71ED72006D39D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A96105DA1D71ED72006D39D0 /* Build configuration list for PBXNativeTarget "TheAnimeToolTests" */ = {
 			isa = XCConfigurationList;
@@ -999,6 +1004,7 @@
 				A96105DC1D71ED72006D39D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A96105DD1D71ED72006D39D0 /* Build configuration list for PBXNativeTarget "TheAnimeToolUITests" */ = {
 			isa = XCConfigurationList;
@@ -1007,6 +1013,7 @@
 				A96105DF1D71ED72006D39D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -9,25 +9,47 @@
 import CoreData
 import Foundation
 
-
-public typealias SaveCompletionHandler = () -> Void
-
-
 public class CoreDataService {
-	public func saveRootContext(completionHandler: SaveCompletionHandler) {
+    public typealias SaveCompletionHandler = () -> Void
+    
+    public func SaveRootContext(completionHandler: SaveCompletionHandler = {}) {
 		self.rootContext.performBlock() {
-			do {
-				try self.rootContext.save()
-
-				dispatch_async(dispatch_get_main_queue(), { () -> Void in
-					completionHandler()
-				})
-			}
-			catch let error {
-				fatalError("Failed to save root context: \(error as NSError)")
-			}
+            do {
+                try self.rootContext.save()
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionHandler()
+                })
+            }
+            catch let error {
+                fatalError("Failed to save root context: \(error as NSError)")
+            }
 		}
 	}
+    
+    public func SaveMainContext(completionHandler: SaveCompletionHandler = {}) {
+        self.mainQueueContext.performBlock() {
+            do {
+                try self.mainQueueContext.save()
+                dispatch_async(dispatch_get_main_queue(), {
+                    completionHandler()
+                })
+            }
+            catch let error {
+                fatalError("Failed to save root context: \(error as NSError)")
+            }
+        }
+    }
+    
+    public func SaveMainContextAndWait() {
+        self.mainQueueContext.performBlockAndWait() {
+            do {
+                try self.mainQueueContext.save()
+            }
+            catch let error {
+                fatalError("Failed to save root context: \(error as NSError)")
+            }
+        }
+    }
 
 	// MARK: Initialization
 	private init() {

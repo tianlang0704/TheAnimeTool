@@ -12,6 +12,8 @@ import PromiseKit
 import NDHpple
 
 public class TorrentService: NSObject {
+    typealias CompletionHandler = () -> Void
+    
     enum TorrentError: ErrorType{
         case InvalidId
         case InvalidPageData
@@ -33,8 +35,8 @@ public class TorrentService: NSObject {
     //notifications
     static let LocalTorrentsWillUpdateNotification = "LocalTorrentsWillUpdateNotification"
     static let LocalTorrentsDidUpdateNotification = "LocalTorrentsDidUpdateNotification"
-    static let TorrentInControllerDidUpdateNotification = "TorrentInControllerDidUpdateNotification"
-    static let TorrentInControllerUpdateFailedNotification = "TorrentInControllerUpdateFailedNotification"
+    static let TorrentDidRegisterNotification = "TorrentDidRegisterNotification"
+    static let TorrentRegisterFailedNotification = "TorrentRegisterFailedNotification"
     
     //xpaths can be changed in the settings in the future
     let TorrentEntriesXpath = "//table[@class=\"tlist\"]//tr[position()>1]"
@@ -49,7 +51,7 @@ public class TorrentService: NSObject {
     
     var insertIndexForTempEntries = 0
     
-    override init() {
+    override private init() {
         torrentController = Controller.sharedController() as! Controller
         torrentController.fixDocumentsDirectory()
         torrentController.transmissionInitialize()
@@ -58,38 +60,40 @@ public class TorrentService: NSObject {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleAddTorrentFailed), name: NotificationAddNewTorrentFailed, object: nil)
     }
     
-    func GetTorrentEntitiesFromHash(hashString: String) -> [Torrents]{
-        let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
-        fetchRequest.predicate = NSPredicate(format: "torrentHashString == %@", hashString)
-        var res:[Torrents] = []
-        do{
-            res = try CoreDataService.sharedCoreDataService.mainQueueContext.executeFetchRequest(fetchRequest) as! [Torrents]
-        }catch(let error){
-            print("Error finding torrents from hash string: \(error)")
-        }
-        return res
-    }
+//    func GetTorrentEntitiesFromHash(hashString: String) -> [Torrents]{
+//        let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
+//        fetchRequest.predicate = NSPredicate(format: "torrentHashString == %@", hashString)
+//        var res:[Torrents] = []
+//        do{
+//            res = try CoreDataService.sharedCoreDataService.mainQueueContext.executeFetchRequest(fetchRequest) as! [Torrents]
+//        }catch(let error){
+//            print("Error finding torrents from hash string: \(error)")
+//        }
+//        return res
+//    }
     
     func UpdateTempTorrentsWith(searchStr: String, page:Int = 1, sortBy: SortBy = .Date, isDesc:Bool = true){
-        self.ClearTempTorrents()
-        firstly{ () -> URLDataPromise in
-            return NSURLSession.GET("http://www.nyaa.se/",
-                query: ["page":"search",
-                "cats":"1_0",
-                "filter":"0",
-                "term":searchStr,
-                "sort":sortBy.rawValue,
-                "order":(isDesc ? 1 : 2),
-                "offset":page])
-            }.then{ data -> Void in
-                do{ try self.UpdateLocalTorrents(data, isTemp: true) }catch(let error){ throw error }
-            }.error{ error in
-                print("Error getting torrent data: \(error)")
+        self.ClearTempTorrents(){
+            firstly{ () -> URLDataPromise in
+                return NSURLSession.GET("http://www.nyaa.se/",
+                    query: ["page":"search",
+                        "cats":"1_0",
+                        "filter":"0",
+                        "term":searchStr,
+                        "sort":sortBy.rawValue,
+                        "order":(isDesc ? 1 : 2),
+                        "offset":page])
+                }.then{ data -> Void in
+                    do{ try self.UpdateLocalTorrents(data, isTemp: true) }catch(let error){ throw error }
+                }.error{ error in
+                    print("Error getting torrent data: \(error)")
+            }
         }
     }
     
     private func UpdateLocalTorrents(data: NSData, isTemp: Bool) throws{
         guard let html = String(data: data, encoding: NSUTF8StringEncoding) else { return }
+        //parse nyaa search results
         let doc = NDHpple(HTMLData: html)
         let torrentNames = doc.searchWithXPathQuery(self.TorrentNameXpath).map{$0.firstChild?.content}
         let torrentS = doc.searchWithXPathQuery(self.TorrentSXpath).map{Int($0.firstChild?.content ?? "0") ?? 0}
@@ -110,67 +114,106 @@ public class TorrentService: NSObject {
             return Int(url.substringFromIndex(tidStart))
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.LocalTorrentsWillUpdateNotification, object: self)
-
+        //get existing local torrents
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
-        let torrentCount = torrentNames.count
-        for i in 0..<torrentCount {
-            let newTorrent = NSEntityDescription.insertNewObjectForNamedEntity(Torrents.self, inManagedObjectContext: context)
-            newTorrent.torrentName = torrentNames[i]
-            newTorrent.torrentNyaaId = torrentIds[i]
-            newTorrent.torrentSeeders = torrentS[i]
-            newTorrent.torrentLeechers = torrentL[i]
-            newTorrent.torrentDownloads = torrentD[i]
-            newTorrent.torrentSize = torrentSize[i]
-            newTorrent.torrentDownloadURL = torrentURL[i]
-            newTorrent.torrentFlagTemp = NSNumber(bool: isTemp)
-            newTorrent.torrentOrder = self.insertIndexForTempEntries
-            self.insertIndexForTempEntries += 1
-        }
-        
-        do{ try context.save()} catch {
-            print("Error saving new torrent information")
-            throw TorrentError.ErrorSavingCoreData
-        }
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.LocalTorrentsDidUpdateNotification, object: self)
-    }
-    
-    func UpdateTorrentEntityInController(torrentEntity: Torrents){
-        let torrentController = TorrentService.sharedTorrentService.torrentController
-        
-        if let hashString = torrentEntity.torrentHashString {
-            if let torrent = torrentController.torrentFromHash(hashString) as? Torrent {
-                NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.TorrentInControllerDidUpdateNotification, object: self, userInfo: ["torrent": torrent])
-                return
-            }else{
-                torrentEntity.torrentHashString = nil
-                do{ try CoreDataService.sharedCoreDataService.mainQueueContext.save()}catch{print("Error reset hash failed")}
+        let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
+        fetchRequest.predicate = NSPredicate(format: "torrentFlagSaved == YES")
+        context.performBlock(){
+            let localTorrents: [Torrents]
+            do { localTorrents = try context.executeFetchRequest(fetchRequest) as! [Torrents] }catch(let error){print("Error getting local torrents:\(error)"); return}
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.LocalTorrentsWillUpdateNotification, object: self)
+            
+            let torrentCount = torrentNames.count
+            for i in 0..<torrentCount {
+                //only update some data if stored version exists
+                let nyaaId = torrentIds[i]
+                let resultIdx = localTorrents.indexOf({$0.torrentNyaaId == nyaaId})
+                let newTorrent: Torrents
+                if let localTorrentIdx = resultIdx{
+                    newTorrent = localTorrents[localTorrentIdx]
+                }else{
+                    newTorrent = NSEntityDescription.insertNewObjectForNamedEntity(Torrents.self, inManagedObjectContext: context)
+                    newTorrent.torrentNyaaId = torrentIds[i]
+                    newTorrent.torrentSize = torrentSize[i]
+                    newTorrent.torrentDownloadURL = torrentURL[i]
+                }
+                newTorrent.torrentFlagTemp = NSNumber(bool: isTemp)
+                newTorrent.torrentName = torrentNames[i]
+                newTorrent.torrentSeeders = torrentS[i]
+                newTorrent.torrentLeechers = torrentL[i]
+                newTorrent.torrentDownloads = torrentD[i]
+                newTorrent.torrentTempOrder = self.insertIndexForTempEntries
+                self.insertIndexForTempEntries += 1
+            }
+            context.SaveRecursivelyToPersistentStorage(){
+                NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.LocalTorrentsDidUpdateNotification, object: self)
             }
         }
         
+    }
+    
+    func RegisterTorrentEntityInController(torrentEntity: Torrents){
+        if let hashString = torrentEntity.torrentHashString {
+            //If hash found in core data, bring out saved torrrent or empty the core data
+            if let torrent = self.torrentController.torrentFromHash(hashString) as? Torrent {
+                NSNotificationCenter.defaultCenter().postNotificationName(
+                    TorrentService.TorrentDidRegisterNotification,
+                    object: self,
+                    userInfo: ["torrent": torrent, "isNew": false])
+            }else{
+                CoreDataService.sharedCoreDataService.mainQueueContext.performBlock(){
+                    torrentEntity.torrentHashString = nil
+                    CoreDataService.sharedCoreDataService.mainQueueContext.SaveRecursivelyToPersistentStorage(){
+                        guard let url = torrentEntity.torrentDownloadURL else { return }
+                        self.torrentController.addTorrentFromURL(url)
+                    }
+                }
+            }
+            return
+        }
+        
         guard let url = torrentEntity.torrentDownloadURL else { return }
-        torrentController.addTorrentFromURL(url)
+        self.torrentController.addTorrentFromURL(url)
     }
     
     @objc private func HandleNewTorrentAdded(notification: NSNotification){
         guard let torrent = notification.userInfo?["torrent"] as? Torrent else { print("Error no torrent in userinfo");return }
-        NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.TorrentInControllerDidUpdateNotification, object: self, userInfo: ["torrent": torrent])
+        NSNotificationCenter.defaultCenter().postNotificationName(
+            TorrentService.TorrentDidRegisterNotification,
+            object: self,
+            userInfo: ["torrent": torrent, "isNew": true])
     }
     
     @objc private func HandleAddTorrentFailed(notification: NSNotification){
         guard let error = notification.userInfo?["error"] as? NSError else { print("Error no error in userinfo");return }
-        NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.TorrentInControllerUpdateFailedNotification, object: self, userInfo: ["error": error])
+        NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.TorrentRegisterFailedNotification, object: self, userInfo: ["error": error])
     }
     
-    func ClearTempTorrents(){
+    func ClearTempTorrents(completionHandler: CompletionHandler = {}){
         if self.insertIndexForTempEntries > 0{
+            //reset temp flags for saved torrents first
             let context = CoreDataService.sharedCoreDataService.mainQueueContext
             let request = NSFetchRequest(namedEntity: Torrents.self)
-            request.predicate = NSPredicate(format: "torrentFlagTemp == YES")
-            context.deleteAllData(request)
-            self.insertIndexForTempEntries = 0
+            request.predicate = NSPredicate(format: "torrentFlagTemp == YES && torrentFlagSaved == YES")
+            context.performBlock(){
+                let localTorrents: [Torrents]
+                do{try localTorrents =  context.executeFetchRequest(request) as! [Torrents]}catch(let error){print("Error fetching local torrents: \(error)"); return}
+                localTorrents.forEach({$0.torrentFlagTemp = NSNumber(bool: false); $0.torrentTempOrder = 0;})
+                do{try context.save()}catch let error{print("Error saving main context: \(error)")}
+                
+                //delete temp entries from the core data
+                request.predicate = NSPredicate(format: "torrentFlagTemp == YES")
+                context.deleteAllData(request)
+                context.SaveRecursivelyToPersistentStorage(){
+                    self.insertIndexForTempEntries = 0
+                    completionHandler()
+                }
+            }
+        }else{
+            completionHandler()
         }
+        
     }
     
     static func UtilMakeShortSearchString(string:String) -> String{
