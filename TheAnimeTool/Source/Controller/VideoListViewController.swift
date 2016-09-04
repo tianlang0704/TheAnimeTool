@@ -195,9 +195,7 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
         guard let index = video.videoIndex as? UInt else { return cell }
         let isDoNotDownload = vs.CheckIsDoNotDownloadForFileIndex(index) ?? true
         if !isDoNotDownload {
-            vs.UpdateProgressForFileIndex(index){progress in
-                cell.detailTextLabel?.text = "\(video.videoSize ?? 0)MB Progress:\(progress*100)%"
-            }
+            cell.detailTextLabel?.text = "\(video.videoSize ?? 0)MB Progress:\(vs.GetProgressForFileIndex(index)*100)%"
         }else{
             cell.detailTextLabel?.text = "\(video.videoSize ?? 0)MB - Tap to start downloading"
         }

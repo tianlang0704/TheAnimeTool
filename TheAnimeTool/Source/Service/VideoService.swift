@@ -82,6 +82,12 @@ public class VideoService: NSObject {
         }
     }
     
+    func GetProgressForFileIndex(index: UInt) -> Float{
+        //update torrent file info in controller first
+        self.UpdateTorrentFileInfos()
+        return Float(self.torrent?.fileProgressFromIndex(index) ?? 0)
+    }
+    
     func UpdateProgressForFileIndex(index: UInt, completionHandler: UpdateProgressCompletionHandler = {progress in }){
         //update torrent file info in controller first
         self.UpdateTorrentFileInfos()
