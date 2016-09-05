@@ -183,7 +183,7 @@
     [NSUserDefaults resetStandardUserDefaults];
     fDefaults = [NSUserDefaults standardUserDefaults];
     [fDefaults setBool:YES forKey:@"SpeedLimitAuto"];
-    [fDefaults setBool:NO forKey:@"AutoStartDownload"];
+    [fDefaults setBool:YES forKey:@"AutoStartDownload"];
     [fDefaults setBool:YES forKey:@"DHTGlobal"];
     [fDefaults setInteger:0 forKey:@"DownloadLimit"];
     [fDefaults setInteger:0 forKey:@"UploadLimit"];
@@ -243,8 +243,6 @@
     tr_variantDictAddBool(&settings, TR_KEY_alt_speed_enabled, [fDefaults boolForKey: @"SpeedLimit"]);
     
 	tr_variantDictAddBool(&settings, TR_KEY_alt_speed_time_enabled, NO);
-    
-//    tr_variantDictAddBool(&settings, TR_KEY_START, [fDefaults boolForKey: @"AutoStartDownload"]);
 	
     tr_variantDictAddInt(&settings, TR_KEY_speed_limit_down, [fDefaults integerForKey: @"DownloadLimit"]);
     tr_variantDictAddBool(&settings, TR_KEY_speed_limit_down_enabled, [fDefaults boolForKey: @"DownloadLimitEnabled"]);
@@ -287,8 +285,7 @@
     tr_variantDictAddInt(&settings, TR_KEY_rpc_port, [fDefaults integerForKey: @"RPCPort"]);
     tr_variantDictAddStr(&settings, TR_KEY_rpc_username,  [[fDefaults stringForKey: @"RPCUsername"] UTF8String]);
     tr_variantDictAddBool(&settings, TR_KEY_rpc_whitelist_enabled,  [fDefaults boolForKey: @"RPCUseWhitelist"]);
-    tr_variantDictAddBool(&settings, TR_KEY_start_added_torrents, NO);
-//    tr_variantDictAddBool(&settings, TR_KEY_start_added_torrents, [fDefaults boolForKey: @"AutoStartDownload"]);
+    tr_variantDictAddBool(&settings, TR_KEY_start_added_torrents, [fDefaults boolForKey: @"AutoStartDownload"]);
     tr_variantDictAddBool(&settings, TR_KEY_script_torrent_done_enabled, [fDefaults boolForKey: @"DoneScriptEnabled"]);
     tr_variantDictAddStr(&settings, TR_KEY_script_torrent_done_filename, [[fDefaults stringForKey: @"DoneScriptPath"] UTF8String]);
     tr_variantDictAddBool(&settings, TR_KEY_utp_enabled, [fDefaults boolForKey: @"UTPGlobal"]);
@@ -322,7 +319,7 @@
     
 	fUpdateInProgress = NO;
 	
-	fPauseOnLaunch = YES;
+	fPauseOnLaunch = NO;
 //    tr_sessionSaveSettings(fLib, [[self configDir] cStringUsingEncoding:NSUTF8StringEncoding], &settings);
     
     [self loadTorrentHistory];

@@ -25,6 +25,8 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         destination.animeEntity = animeResultsController?.objectAtIndexPath(targetIndex) as? Animes
     }
     
+    
+    //MARK: - View related overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -77,6 +79,8 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Search bar delegates
+    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         guard let text = self.animeSearchBar.text else { return }
         self.SearchWithString(text)
@@ -88,6 +92,8 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         self.SearchWithString("")
         searchBar.resignFirstResponder()
     }
+    
+    // MARK: - Table view data source
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return animeResultsController?.sections?.count ?? 0
@@ -154,25 +160,9 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         let targetHeight = targetWidth
         return CGSize(width: targetWidth, height: targetHeight)
     }
+
     
-    private func UpdateFetchedResults(){
-        do{
-            try animeResultsController?.performFetch()
-        }catch{
-            print("Error fetching animes from core data")
-        }
-    }
-    
-    private func SearchWithString(searchString: String){
-        guard searchString != self.lastSearchString else { return }
-        
-        self.lastSearchString = searchString
-        if searchString == "" {
-            AnimeService.sharedAnimeService.UpdateTempWithAiringAnimes()
-        }else{
-            AnimeService.sharedAnimeService.UpdateTempAnimesWithSearchString(searchString)
-        }
-    }
+    //Mark: - Notification handlers
     
     @objc private func HandleLocalAnimeDidUpdate(notification: NSNotification){
         UpdateFetchedResults()
@@ -199,6 +189,27 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         guard let text = self.animeSearchBar.text else { return }
         self.SearchWithString(text)
         self.animeSearchBar.resignFirstResponder()
+    }
+    
+    //Mark: - Helper functions
+    
+    private func UpdateFetchedResults(){
+        do{
+            try animeResultsController?.performFetch()
+        }catch let error{
+            print("Error fetching animes from core data: \(error)")
+        }
+    }
+    
+    private func SearchWithString(searchString: String){
+        guard searchString != self.lastSearchString else { return }
+        
+        self.lastSearchString = searchString
+        if searchString == "" {
+            AnimeService.sharedAnimeService.UpdateTempWithAiringAnimes()
+        }else{
+            AnimeService.sharedAnimeService.UpdateTempAnimesWithSearchString(searchString)
+        }
     }
 }
 

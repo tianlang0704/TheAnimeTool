@@ -75,9 +75,8 @@ public class VideoService: NSObject {
                 if(isPaused){
                     self.torrent?.setFileCheckState(FileCheckState.Off.rawValue, forIndexes: indexes)
                 }
-                context.SaveRecursivelyToPersistentStorage(){
-                    NSNotificationCenter.defaultCenter().postNotificationName(VideoService.LocalVideosDidUpdateNotification, object: nil)
-                }
+                context.SaveRecursivelyToPersistentStorageAndWait()
+                NSNotificationCenter.defaultCenter().postNotificationName(VideoService.LocalVideosDidUpdateNotification, object: nil)
             }
         }
     }
@@ -99,6 +98,7 @@ public class VideoService: NSObject {
         fetchRequest.predicate = NSPredicate(format: "torrents.torrentHashString == %@ AND videoIndex == %d", hashString, index)
         context.performBlock(){
             guard let videos = try? context.executeFetchRequest(fetchRequest) as! [Videos] else { return }
+            guard videos.count > 0 else { return }
             videos[0].videoDownloadPercent = progress
             CoreDataService.sharedCoreDataService.SaveMainContext(){
                 completionHandler(progress)
@@ -171,6 +171,8 @@ public class VideoService: NSObject {
         torrent?.updateFileStat()
     }
     
+    
+    
     @objc private func HandleTorrentDidRegister(notification: NSNotification){
         guard let torrent = notification.userInfo?["torrent"] as? Torrent else { print("Error no torrent in userinfo");return }
         guard let isNew = notification.userInfo?["isNew"] as? Bool else { print("Error no isNew flag in userinfo");return }
@@ -185,7 +187,12 @@ public class VideoService: NSObject {
     @objc private func HandleTorrentRegisterFailed(notification: NSNotification){
         guard let error = notification.userInfo?["error"] as? NSError else { print("Error no error in userinfo");return }
         if(error.code == 1){
-            guard let hashString = error.userInfo["hashString"] as? String else { print("Error no hash in userinfo");return }
+            guard let filePath = error.userInfo["filePath"] as? String else { print("Error no file path in userinfo"); return }
+            if NSFileManager.defaultManager().fileExistsAtPath(filePath){
+                do{ try NSFileManager.defaultManager().removeItemAtPath(filePath)}catch let error{ print("Error deleting duplicated torrent: \(error)") }
+            }
+            
+            guard let hashString = error.userInfo["hashString"] as? String else { print("Error no hash in userinfo"); return }
             guard let torrent = TorrentService.sharedTorrentService.torrentController.torrentFromHash(hashString) as? Torrent else { return }
             self.UpdateTempVideosWithTorrent(torrent, isPaused: false)
         }

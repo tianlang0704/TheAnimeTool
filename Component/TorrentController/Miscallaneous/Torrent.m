@@ -1653,7 +1653,7 @@ legacyIncompleteFolder: (NSString *) incompleteFolder
         //set libtransmission settings for initialization
         tr_ctor * ctor = tr_ctorNew(lib);
         
-        tr_ctorSetPaused(ctor, TR_FORCE, YES);
+        //tr_ctorSetPaused(ctor, TR_FORCE, YES);
         if (downloadFolder)
             tr_ctorSetDownloadDir(ctor, TR_FORCE, [downloadFolder UTF8String]);
         if (incompleteFolder)

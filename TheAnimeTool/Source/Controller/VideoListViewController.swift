@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class VideoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate/*, NSFetchedResultsControllerDelegate*/ {
+class VideoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     var torrentEntity: Torrents? = nil
     var videoResultsController: NSFetchedResultsController? = nil
     var videoService: VideoService? = nil
@@ -30,6 +30,7 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
         fetchRequest.sortDescriptors = [sortDescriptor]
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         self.videoResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        self.videoResultsController?.delegate = self
 
         //add observer for video
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleLocalVideosDidUpdate), name: VideoService.LocalVideosDidUpdateNotification, object: nil)
@@ -126,52 +127,52 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     //MARK: - Fetch results controller delegates
-//    
-//    func controllerWillChangeContent(controller: NSFetchedResultsController) {
-//        self.videoTableView.beginUpdates()
-//    }
-//    
-//    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-//        switch type {
-//        case .Insert:
-//            self.videoTableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-//        case .Delete:
-//            self.videoTableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-//        default:
-//            break
-//        }
-//    }
-//    
-//    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-//        switch(type) {
-//        case .Insert:
-//            guard let targetIndexPath = newIndexPath else { break }
-//            self.videoTableView.insertRowsAtIndexPaths([targetIndexPath], withRowAnimation: .Fade)
-//            break
-//            
-//        case .Delete:
-//            guard let targetIndexPath = indexPath else { break }
-//            self.videoTableView.deleteRowsAtIndexPaths([targetIndexPath], withRowAnimation: .Fade)
-//            break
-//            
-//        case .Update:
-//            guard let targetIndexPath = indexPath else { break }
-//            guard let targetCell = self.videoTableView.cellForRowAtIndexPath(targetIndexPath) else { break }
-//            self.ConfigureCell(targetCell, indexPath: targetIndexPath)
-//            break
-//            
-//        case .Move:
-//            guard let fromIndexPath = newIndexPath else { break }
-//            guard let toIndexPath = indexPath else { break }
-//            self.videoTableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Fade)
-//            self.videoTableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Fade)
-//            break
-//        }
-//    }
-//    
-//    func controllerDidChangeContent(controller: NSFetchedResultsController) {
-//        self.videoTableView.endUpdates()
-//    }
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        self.videoTableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            self.videoTableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            self.videoTableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        default:
+            break
+        }
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch(type) {
+        case .Insert:
+            guard let targetIndexPath = newIndexPath else { break }
+            self.videoTableView.insertRowsAtIndexPaths([targetIndexPath], withRowAnimation: .Fade)
+            break
+            
+        case .Delete:
+            guard let targetIndexPath = indexPath else { break }
+            self.videoTableView.deleteRowsAtIndexPaths([targetIndexPath], withRowAnimation: .Fade)
+            break
+            
+        case .Update:
+            guard let targetIndexPath = indexPath else { break }
+            guard let targetCell = self.videoTableView.cellForRowAtIndexPath(targetIndexPath) else { break }
+            self.ConfigureCell(targetCell, indexPath: targetIndexPath)
+            break
+            
+        case .Move:
+            guard let fromIndexPath = newIndexPath else { break }
+            guard let toIndexPath = indexPath else { break }
+            self.videoTableView.deleteRowsAtIndexPaths([fromIndexPath], withRowAnimation: .Fade)
+            self.videoTableView.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: .Fade)
+            break
+        }
+    }
+    
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        self.videoTableView.endUpdates()
+    }
     
     
     //MARK: - Notificatoin handler functions
@@ -204,10 +205,12 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     private func UpdateFetchedResults(){
-        do{
-            try self.videoResultsController?.performFetch()
-        }catch{
-            print("Error fetching torrents from core data")
+        CoreDataService.sharedCoreDataService.mainQueueContext.performBlockAndWait(){
+            do{
+                try self.videoResultsController?.performFetch()
+            }catch{
+                print("Error fetching torrents from core data")
+            }
         }
     }
 }

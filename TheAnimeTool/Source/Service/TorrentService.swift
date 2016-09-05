@@ -149,9 +149,9 @@ public class TorrentService: NSObject {
                 newTorrent.torrentTempOrder = self.insertIndexForTempEntries
                 self.insertIndexForTempEntries += 1
             }
-            context.SaveRecursivelyToPersistentStorage(){
-                NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.LocalTorrentsDidUpdateNotification, object: self)
-            }
+            context.SaveRecursivelyToPersistentStorageAndWait()
+            NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.LocalTorrentsDidUpdateNotification, object: self)
+            
         }
         
     }

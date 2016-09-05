@@ -149,9 +149,9 @@ public class AnimeService: NSObject {
                 targetAnime.animeOrder = self.insertIndexForTempEntries
                 self.insertIndexForTempEntries += 1
             }
-            context.SaveRecursivelyToPersistentStorage(){
-                NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeDidUpdateNotification, object: self)
-            }
+            context.SaveRecursivelyToPersistentStorageAndWait()
+            NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeDidUpdateNotification, object: self)
+            
         }
     }
     
