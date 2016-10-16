@@ -105,7 +105,7 @@ extern BOOL isStartingTransferAllowed();
 - (CGFloat)globalUploadSpeed;
 
 - (NSUInteger)torrentsCount;
-- (Torrent*)torrentAtIndex:(NSInteger)index;
+- (Torrent*)torrentAtIndex:(NSUInteger)index;
 - (id)torrentFromHash:(NSString *)hashString;
 
 - (void)addTorrentFromURL:(NSString*)url;

@@ -92,7 +92,7 @@ class VideoListViewController: UIViewController, UITableViewDataSource, UITableV
         guard let vs = self.videoService else { return }
         
         if vs.StartDownloadingVideoAtIndex(index.unsignedIntegerValue){
-            vs.torrentEntity.torrentFlagSaved = NSNumber(bool: true)
+//            vs.torrentEntity.torrentFlagSaved = NSNumber(bool: true)
             
             CoreDataService.sharedCoreDataService.mainQueueContext.SaveRecursivelyToPersistentStorage(){
                 dispatch_async(dispatch_get_main_queue()) {

@@ -49,7 +49,7 @@ public class AnimeService: NSObject {
                             "airing_data": "true"])
                 }.then{ data -> Void in
                         let animeJSON = JSON(data: data)
-                        do{ try self.UpdateLocalAnimes(animeJSON, isTemp: true) } catch(let error){ throw error }
+                        do{ try self.UpdateTempAnimes(animeJSON) } catch(let error){ throw error }
                 }.error{ error in
                         NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeUpdateFailedNotification, object: error as NSError)
                         print("Error getting anime data: \(error)")
@@ -67,7 +67,7 @@ public class AnimeService: NSObject {
                         query: ["access_token": "\(service.tokenString)"])
                     }.then{ data -> Void in
                         let animeJSON = JSON(data: data)
-                        do{ try self.UpdateLocalAnimes(animeJSON, isTemp: true) } catch(let error){ throw error }
+                        do{ try self.UpdateTempAnimes(animeJSON) } catch(let error){ throw error }
                     }.error{ error in
                         NSNotificationCenter.defaultCenter().postNotificationName(AnimeService.LocalAnimeUpdateFailedNotification, object: error as NSError)
                         print("Error getting anime data: \(error)")
@@ -107,7 +107,7 @@ public class AnimeService: NSObject {
     }
     
     //Update local anime data from the JSON array of anilist small model
-    private func UpdateLocalAnimes(JSONObject: JSON, isTemp: Bool) throws{
+    private func UpdateTempAnimes(JSONObject: JSON) throws{
         if let errorCdoe = JSONObject["error"]["status"].int{
             if errorCdoe == 200{
                 throw AnimeError.EmtpyResult
@@ -145,7 +145,6 @@ public class AnimeService: NSObject {
                 targetAnime.animeTotalEps = animeJSON["total_episodes"].int
                 targetAnime.animeNextEps = animeJSON["airing"]["next_episode"].int
                 targetAnime.animeNextEpsTime = animeJSON["airing"]["time"].date
-                targetAnime.animeFlagTemp = NSNumber(bool: isTemp)
                 targetAnime.animeOrder = self.insertIndexForTempEntries
                 self.insertIndexForTempEntries += 1
             }
@@ -158,13 +157,11 @@ public class AnimeService: NSObject {
     func ClearTempAnimes(completionHandler: CompletionHandler = {}){
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         let request = NSFetchRequest(namedEntity: Animes.self)
-        request.predicate = NSPredicate(format: "animeFlagTemp == YES")
         context.performBlock(){
             context.deleteAllData(request)
-            context.SaveRecursivelyToPersistentStorage(){
-                self.insertIndexForTempEntries = 0
-                completionHandler()
-            }
+            context.SaveRecursivelyToPersistentStorageAndWait()
+            self.insertIndexForTempEntries = 0
+            completionHandler()
         }
     }
     

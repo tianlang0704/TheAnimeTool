@@ -79,6 +79,8 @@
 		A96107211D73300C006D39D0 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */; };
 		A96107221D73300C006D39D0 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A96105F21D72FB6B006D39D0 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96DFE151D74A57100E8C010 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96DFE141D74A57100E8C010 /* UserService.swift */; };
+		A986AC161DB1DE8700CF54B3 /* SavedTorrents+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986AC131DB1DE8700CF54B3 /* SavedTorrents+CoreDataProperties.swift */; };
+		A986AC171DB1DE8700CF54B3 /* SavedTorrents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A986AC141DB1DE8700CF54B3 /* SavedTorrents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +207,8 @@
 		A96107071D732586006D39D0 /* libutp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libutp.a; sourceTree = "<group>"; };
 		A96107161D7325D3006D39D0 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A96DFE141D74A57100E8C010 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		A986AC131DB1DE8700CF54B3 /* SavedTorrents+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SavedTorrents+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		A986AC141DB1DE8700CF54B3 /* SavedTorrents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedTorrents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,7 +261,7 @@
 			children = (
 				A96107161D7325D3006D39D0 /* libz.tbd */,
 				A96106B91D72FC4E006D39D0 /* Default-568h@2x.png */,
-				A96105E31D72FB6B006D39D0 /* Component */,
+				A96105E31D72FB6B006D39D0 /* Components */,
 				A96105AE1D71ED71006D39D0 /* TheAnimeTool */,
 				A96105C61D71ED72006D39D0 /* TheAnimeToolTests */,
 				A96105D11D71ED72006D39D0 /* TheAnimeToolUITests */,
@@ -304,7 +308,7 @@
 			path = TheAnimeToolUITests;
 			sourceTree = "<group>";
 		};
-		A96105E31D72FB6B006D39D0 /* Component */ = {
+		A96105E31D72FB6B006D39D0 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				A96105E41D72FB6B006D39D0 /* Clibxml2 */,
@@ -313,7 +317,7 @@
 				A96105F01D72FB6B006D39D0 /* SwiftyJSON */,
 				A96105F31D72FB6B006D39D0 /* TorrentController */,
 			);
-			path = Component;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		A96105E41D72FB6B006D39D0 /* Clibxml2 */ = {
@@ -507,6 +511,8 @@
 				A96106C71D731B43006D39D0 /* Protocol */,
 				A96106C91D731B43006D39D0 /* Torrents+CoreDataProperties.swift */,
 				A96106CA1D731B43006D39D0 /* Torrents.swift */,
+				A986AC131DB1DE8700CF54B3 /* SavedTorrents+CoreDataProperties.swift */,
+				A986AC141DB1DE8700CF54B3 /* SavedTorrents.swift */,
 				A96106CB1D731B43006D39D0 /* Users+CoreDataProperties.swift */,
 				A96106CC1D731B43006D39D0 /* Users.swift */,
 				A96106CD1D731B43006D39D0 /* Videos+CoreDataProperties.swift */,
@@ -712,6 +718,7 @@
 				A96106D01D731B43006D39D0 /* Animes+CoreDataProperties.swift in Sources */,
 				A96106B51D72FC2F006D39D0 /* AnimeService.swift in Sources */,
 				A96106DB1D731B43006D39D0 /* Videos+CoreDataProperties.swift in Sources */,
+				A986AC161DB1DE8700CF54B3 /* SavedTorrents+CoreDataProperties.swift in Sources */,
 				A96106731D72FB6B006D39D0 /* SwiftyJSON+NSDate.swift in Sources */,
 				A96106971D72FB6C006D39D0 /* Torrent.m in Sources */,
 				A96106DA1D731B43006D39D0 /* Users.swift in Sources */,
@@ -720,6 +727,7 @@
 				A96106981D72FB6C006D39D0 /* TorrentFetcher.m in Sources */,
 				A96106D71D731B43006D39D0 /* Torrents+CoreDataProperties.swift in Sources */,
 				A961069A1D72FB6C006D39D0 /* TrackerNode.m in Sources */,
+				A986AC171DB1DE8700CF54B3 /* SavedTorrents.swift in Sources */,
 				A96106761D72FB6B006D39D0 /* NSDate+Helper.m in Sources */,
 				A96106781D72FB6B006D39D0 /* NSString+RelativePath.m in Sources */,
 				A961069E1D72FBE0006D39D0 /* Model.xcdatamodeld in Sources */,
@@ -876,22 +884,22 @@
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Component/**",
-					"$(PROJECT_DIR)/Component/Clibxml2",
-					"$(PROJECT_DIR)/Component/NDHpple",
-					"$(PROJECT_DIR)/Component/PromiseKit",
-					"$(PROJECT_DIR)/Component/SwiftyJSON",
+					"$(PROJECT_DIR)/Components/**",
+					"$(PROJECT_DIR)/Components/Clibxml2",
+					"$(PROJECT_DIR)/Components/NDHpple",
+					"$(PROJECT_DIR)/Components/PromiseKit",
+					"$(PROJECT_DIR)/Components/SwiftyJSON",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
-					"$(SRCROOT)/Component/TorrentController/include",
-					"$(SRCROOT)/Component/TorrentController",
+					"$(SRCROOT)/Components/TorrentController/include",
+					"$(SRCROOT)/Components/TorrentController",
 				);
 				INFOPLIST_FILE = TheAnimeTool/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Component/TorrentController/lib_x86_64",
+					"$(PROJECT_DIR)/Components/TorrentController/lib_x86_64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.ToolS.TheAnimeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -907,22 +915,22 @@
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Component/**",
-					"$(PROJECT_DIR)/Component/Clibxml2",
-					"$(PROJECT_DIR)/Component/NDHpple",
-					"$(PROJECT_DIR)/Component/PromiseKit",
-					"$(PROJECT_DIR)/Component/SwiftyJSON",
+					"$(PROJECT_DIR)/Components/**",
+					"$(PROJECT_DIR)/Components/Clibxml2",
+					"$(PROJECT_DIR)/Components/NDHpple",
+					"$(PROJECT_DIR)/Components/PromiseKit",
+					"$(PROJECT_DIR)/Components/SwiftyJSON",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
-					"$(SRCROOT)/Component/TorrentController/include",
-					"$(SRCROOT)/Component/TorrentController",
+					"$(SRCROOT)/Components/TorrentController/include",
+					"$(SRCROOT)/Components/TorrentController",
 				);
 				INFOPLIST_FILE = TheAnimeTool/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Component/TorrentController/lib_x86_64",
+					"$(PROJECT_DIR)/Components/TorrentController/lib_x86_64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.ToolS.TheAnimeTool;
 				PRODUCT_NAME = "$(TARGET_NAME)";

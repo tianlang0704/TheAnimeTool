@@ -1,5 +1,5 @@
 //
-//  Torrents+CoreDataProperties.swift
+//  SavedTorrents+CoreDataProperties.swift
 //  TheAnimeTool
 //
 //  Created by Tieria C.Monk on 10/14/16.
@@ -12,17 +12,13 @@
 import Foundation
 import CoreData
 
-extension Torrents {
+extension SavedTorrents {
 
+    @NSManaged var torrentLocalPath: String?
     @NSManaged var torrentDownloadURL: String?
-    @NSManaged var torrentLeecherCount: NSNumber?
+    @NSManaged var torrentHashString: String?
     @NSManaged var torrentName: String?
     @NSManaged var torrentNyaaId: NSNumber?
-    @NSManaged var torrentSeederCount: NSNumber?
-    @NSManaged var torrentSize: NSNumber?
-    @NSManaged var torrentOrder: NSNumber?
-    @NSManaged var animes: Animes?
-    @NSManaged var users: NSSet?
-    @NSManaged var videos: NSSet?
+    @NSManaged var torrentDownloadSpeed: NSNumber?
 
 }

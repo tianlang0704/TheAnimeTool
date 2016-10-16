@@ -571,7 +571,7 @@
     return [fTorrents count];
 }
 
-- (Torrent*)torrentAtIndex:(NSInteger)index
+- (Torrent*)torrentAtIndex:(NSUInteger)index
 {
     return [fTorrents objectAtIndex:index];
 }

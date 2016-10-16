@@ -12,8 +12,7 @@ import PromiseKit
 import NDHpple
 
 class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource/*, NSFetchedResultsControllerDelegate*/ {
-    var defaultPredicateString = ""
-    var defaultSortDescriptor = NSSortDescriptor(key: "torrentTempOrder", ascending: true)
+    var defaultSortDescriptor = NSSortDescriptor(key: "torrentOrder", ascending: true)
     
     var animeEntity: Animes? = nil
     var torrentResultsController: NSFetchedResultsController? = nil
@@ -26,7 +25,6 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         
         //initialize pre-requisites for fetched results controller
         let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
-        fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         
         //initialize some settings for visual elements
@@ -44,25 +42,25 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         
         //split saved and browse anime
         if let animeEntity = self.animeEntity{
-            //initialize torrent results controller
-            self.defaultPredicateString = "torrentFlagTemp == YES"
-            fetchRequest.predicate = NSPredicate(format: self.defaultPredicateString)
+            //initialize torrent results controller for temp torrents
+            fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
             self.torrentResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
             //self.torrentResultsController?.delegate = self
             
             //fetch data from Nyaa server according to the selected anime
             let searchString = TorrentService.UtilMakeShortSearchString(animeEntity.animeTitleEnglish ?? "")
             print(searchString)
-            TorrentService.sharedTorrentService.UpdateTempTorrentsWith(searchString, sortBy: TorrentService.SortBy.Seeders)
+            TorrentService.sharedTorrentService.UpdateTempTorrentsWithSearchString(searchString, sortBy: TorrentService.SortBy.Seeders)
         }else{
-            //initialize torrent results controller
-            self.defaultPredicateString = "torrentFlagSaved == YES"
-            fetchRequest.predicate = NSPredicate(format: self.defaultPredicateString)
+            //initialize torrent results controller for saved torrents
+            self.defaultSortDescriptor = NSSortDescriptor(key: "torrentName", ascending: true)
+            fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
             let context = CoreDataService.sharedCoreDataService.mainQueueContext
             self.torrentResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
             //self.torrentResultsController?.delegate = self
             
-            self.UpdateFetchedResults()
+            //self.UpdateFetchedResults()
+            TorrentService.sharedTorrentService.UpdateSavedTorrentFromTorrentEngine()
         }
     }
     
@@ -210,10 +208,9 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
     private func ConfigureCell(cell: UITableViewCell, indexPath: NSIndexPath) -> UITableViewCell{
         let torrent = torrentResultsController?.objectAtIndexPath(indexPath) as! Torrents
         cell.textLabel?.text = torrent.torrentName
-        cell.detailTextLabel?.text = String(format: "S:%@ L:%@ D:%@ Size:%@MB",
-                                            torrent.torrentSeeders ?? 0,
-                                            torrent.torrentLeechers ?? 0,
-                                            torrent.torrentDownloads ?? 0,
+        cell.detailTextLabel?.text = String(format: "S:%@ L:%@ Size:%@MB",
+                                            torrent.torrentSeederCount ?? 0,
+                                            torrent.torrentLeecherCount ?? 0,
                                             torrent.torrentSize ?? 0)
         return cell
     }
@@ -232,14 +229,14 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         let fetchRequest = NSFetchRequest(namedEntity: Torrents.self)
         if searchString == "" {
-            fetchRequest.predicate = NSPredicate(format: self.defaultPredicateString)
+            fetchRequest.predicate = nil
             fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
         }else{
             let separatedString = searchString.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             var subPredicates = [NSPredicate]()
             for subString in separatedString{
                 guard subString.characters.count > 0 else { continue }
-                subPredicates.append(NSPredicate(format: "torrentName CONTAINS[cd] \"\(subString)\" && \(self.defaultPredicateString)"))
+                subPredicates.append(NSPredicate(format: "torrentName CONTAINS[cd] \"\(subString)\""))
             }
             let filterPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: subPredicates)
             fetchRequest.predicate = filterPredicate

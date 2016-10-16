@@ -39,7 +39,6 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         //initialize fetched results controller
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         let fetchRequest = NSFetchRequest(namedEntity: Animes.self)
-        fetchRequest.predicate = NSPredicate(format: "animeFlagTemp == YES")
         let sortDescriptor = NSSortDescriptor(key: "animeNextEpsTime", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         self.animeResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -113,7 +112,8 @@ class BrowseAnimeViewController: UIViewController, UISearchBarDelegate, UICollec
         let score = anime.animeScore ?? 0
         cell.shortDescription.text = String(format: "%@\nScore: %@", anime.animeTitleEnglish ?? "", score == 0 ? "N/A" : String(score))
         
-        UrlIf: if let urlString = anime.animeImgM {
+        UrlIf:
+        if let urlString = anime.animeImgM {
             guard let url = NSURL(string: urlString) else { break UrlIf}
             
             let task = NSURLSession.sharedSession().dataTaskWithURL(url){(data, response, error) in

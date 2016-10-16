@@ -3,7 +3,6 @@
     <entity name="Animes" representedClassName=".Animes" syncable="YES">
         <attribute name="animeAnilistId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="animeDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="animeFlagTemp" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="animeImgL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="animeImgM" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="animeImgS" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,20 +17,22 @@
         <attribute name="animeTotalEps" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="torrents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Torrents" inverseName="animes" inverseEntity="Torrents" syncable="YES"/>
     </entity>
-    <entity name="Torrents" representedClassName=".Torrents" syncable="YES">
-        <attribute name="torrentDownloads" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    <entity name="SavedTorrents" representedClassName=".SavedTorrents" syncable="YES">
+        <attribute name="torrentDownloadSpeed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="torrentDownloadURL" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="torrentFlagSaved" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="torrentFlagTemp" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="torrentHashString" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="torrentLeechers" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="torrentLocalPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="torrentHashString" attributeType="String" syncable="YES"/>
+        <attribute name="torrentLocalPath" attributeType="String" syncable="YES"/>
         <attribute name="torrentName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="torrentNyaaId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="torrentSavedOrder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="torrentSeeders" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Torrents" representedClassName=".Torrents" syncable="YES">
+        <attribute name="torrentDownloadURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="torrentLeecherCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="torrentName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="torrentNyaaId" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="torrentOrder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="torrentSeederCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="torrentSize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="torrentTempOrder" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="animes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Animes" inverseName="torrents" inverseEntity="Animes" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Users" inverseName="torrents" inverseEntity="Users" syncable="YES"/>
         <relationship name="videos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Videos" inverseName="torrents" inverseEntity="Videos" syncable="YES"/>
@@ -49,9 +50,10 @@
         <relationship name="torrents" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Torrents" inverseName="videos" inverseEntity="Torrents" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Animes" positionX="25" positionY="-63" width="128" height="285"/>
-        <element name="Torrents" positionX="315" positionY="117" width="128" height="285"/>
+        <element name="Animes" positionX="25" positionY="-63" width="128" height="270"/>
+        <element name="Torrents" positionX="315" positionY="117" width="128" height="195"/>
         <element name="Users" positionX="-137" positionY="162" width="128" height="73"/>
         <element name="Videos" positionX="45" positionY="288" width="128" height="135"/>
+        <element name="SavedTorrents" positionX="63" positionY="81" width="128" height="135"/>
     </elements>
 </model>

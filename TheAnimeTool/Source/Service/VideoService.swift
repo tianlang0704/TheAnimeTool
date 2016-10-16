@@ -45,9 +45,8 @@ public class VideoService: NSObject {
             if videoCount > 0 {
                 context.deleteAllData(request)
             }
-            context.SaveRecursivelyToPersistentStorage(){
-                completionHandler()
-            }
+            context.SaveRecursivelyToPersistentStorageAndWait()
+            completionHandler()
         }
     }
     
@@ -59,7 +58,6 @@ public class VideoService: NSObject {
             
             context.performBlock(){
                 NSNotificationCenter.defaultCenter().postNotificationName(VideoService.LocalVideosWillUpdateNotification, object: nil)
-                self.torrentEntity.torrentHashString = torrent.hashString()
                 let indexes = NSMutableIndexSet()
                 let videoList = torrent.flatFileList() as! [FileListNode]
                 for video in videoList {
