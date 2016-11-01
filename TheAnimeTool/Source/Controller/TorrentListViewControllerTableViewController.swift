@@ -51,16 +51,6 @@ class TorrentListViewController: UIViewController, UISearchBarDelegate, UITableV
             let searchString = TorrentService.UtilMakeShortSearchString(animeEntity.animeTitleEnglish ?? "")
             print(searchString)
             TorrentService.sharedTorrentService.UpdateTempTorrentsWithSearchString(searchString, sortBy: TorrentService.SortBy.Seeders)
-        }else{
-            //initialize torrent results controller for saved torrents
-            self.defaultSortDescriptor = NSSortDescriptor(key: "torrentName", ascending: true)
-            fetchRequest.sortDescriptors = [self.defaultSortDescriptor]
-            let context = CoreDataService.sharedCoreDataService.mainQueueContext
-            self.torrentResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-            //self.torrentResultsController?.delegate = self
-            
-            //self.UpdateFetchedResults()
-            TorrentService.sharedTorrentService.UpdateSavedTorrentFromTorrentEngine()
         }
     }
     

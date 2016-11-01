@@ -34,7 +34,7 @@ public class VideoService: NSObject {
         super.init()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleTorrentDidRegister), name: TorrentService.TorrentDidRegisterNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleTorrentRegisterFailed), name: TorrentService.TorrentRegisterFailedNotification, object: nil)
-        TorrentService.sharedTorrentService.RegisterTorrentEntityInController(torrentEntity)
+        SavedTorrentService.sharedSavedTorrentService.RegisterTorrentEntityInController(torrentEntity)
     }
     
     func ClearCurrentVideoEntities(completionHandler: CompletionHandler = {}){
@@ -183,16 +183,6 @@ public class VideoService: NSObject {
     }
     
     @objc private func HandleTorrentRegisterFailed(notification: NSNotification){
-        guard let error = notification.userInfo?["error"] as? NSError else { print("Error no error in userinfo");return }
-        if(error.code == 1){
-            guard let filePath = error.userInfo["filePath"] as? String else { print("Error no file path in userinfo"); return }
-            if NSFileManager.defaultManager().fileExistsAtPath(filePath){
-                do{ try NSFileManager.defaultManager().removeItemAtPath(filePath)}catch let error{ print("Error deleting duplicated torrent: \(error)") }
-            }
-            
-            guard let hashString = error.userInfo["hashString"] as? String else { print("Error no hash in userinfo"); return }
-            guard let torrent = TorrentService.sharedTorrentService.torrentController.torrentFromHash(hashString) as? Torrent else { return }
-            self.UpdateTempVideosWithTorrent(torrent, isPaused: false)
-        }
+        NSLog("Torrent register failed")
     }
 }

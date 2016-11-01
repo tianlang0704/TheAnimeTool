@@ -55,24 +55,8 @@ public class TorrentService: NSObject {
     let TorrentLXpath = "//table[@class=\"tlist\"]//tr[position()>1]//td[@class=\"tlistln\" or @class=\"tlistfailed\"]"
     let TorrentSizeXpath = "//table[@class=\"tlist\"]//tr[position()>1]//td[@class=\"tlistsize\"]"
     let TorrentDownloadXpath = "//table[@class=\"tlist\"]//tr[position()>1]//td[@class=\"tlistdownload\"]//a"
-    //torrent engine
-    let torrentController: Controller
     
     var insertIndexForTempEntries = 0
-    
-    override private init() {
-        torrentController = Controller.sharedController() as! Controller
-        torrentController.fixDocumentsDirectory()
-        torrentController.transmissionInitialize()
-        super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleNewTorrentAdded), name: NotificationNewTorrentAdded, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HandleAddTorrentFailed), name: NotificationAddNewTorrentFailed, object: nil)
-    }
-    
-    //This function grabs info from the torrent engine and update the core data
-    func UpdateSavedTorrentFromTorrentEngine(){
-        //TODO:
-    }
     
     func UpdateTempTorrentsWithSearchString(searchStr: String, page:Int = 1, sortBy: SortBy = .Date, isDesc:Bool = true){
         self.ClearTempTorrents(){
@@ -156,52 +140,16 @@ public class TorrentService: NSObject {
         }
     }
     
-    func RegisterTorrentEntityInController(torrentEntity: Torrents){
-        guard let nyaaId = torrentEntity.torrentNyaaId else { print("Error: missing nyaaId in torrent"); return }
-        guard let url = torrentEntity.torrentDownloadURL else { print("Error: missing url in torrent"); return }
-        
-        let context = CoreDataService.sharedCoreDataService.mainQueueContext
-        let request = NSFetchRequest(namedEntity: SavedTorrents.self)
-        context.performBlock(){
-            let savedTorrents: [SavedTorrents]
-            do{try savedTorrents =  context.executeFetchRequest(request) as! [SavedTorrents]}catch(let error){print("Error fetching saved torrents: \(error)"); return}
-            if let savedTorrent = savedTorrents.filter({ $0.torrentNyaaId == nyaaId }).first {
-                guard let hash = savedTorrent.torrentHashString else {print("Error: saved torrent missing hash"); return}
-                guard let matchTorrent = self.torrentController.torrentFromHash(hash) as? Torrent else {print("Error: no mathcing hash found in engine"); return}
-                NSNotificationCenter.defaultCenter().postNotificationName(
-                    TorrentService.TorrentDidRegisterNotification,
-                    object: self,
-                    userInfo: ["torrent": matchTorrent, "isNew": false])
-                return
-            }else{
-                self.torrentController.addTorrentFromURL(url)
-            }
-        }
-    }
-    
     func ClearTempTorrents(completionHandler: CompletionHandler = {}){
         let context = CoreDataService.sharedCoreDataService.mainQueueContext
         let request = NSFetchRequest(namedEntity: Torrents.self)
         context.performBlock(){
             //delete temp entries from the core data
             context.deleteAllData(request)
-            context.SaveRecursivelyToPersistentStorageAndWait()
+            context.SaveRecursivelyToPersistentStorageAndWait()  
             self.insertIndexForTempEntries = 0
             completionHandler()
         }
-    }
-    
-    @objc private func HandleNewTorrentAdded(notification: NSNotification){
-        guard let torrent = notification.userInfo?["torrent"] as? Torrent else { print("Error: no torrent in userinfo");return }
-        NSNotificationCenter.defaultCenter().postNotificationName(
-            TorrentService.TorrentDidRegisterNotification,
-            object: self,
-            userInfo: ["torrent": torrent, "isNew": true])
-    }
-    
-    @objc private func HandleAddTorrentFailed(notification: NSNotification){
-        guard let error = notification.userInfo?["error"] as? NSError else { print("Error: no error in userinfo");return }
-        NSNotificationCenter.defaultCenter().postNotificationName(TorrentService.TorrentRegisterFailedNotification, object: self, userInfo: ["error": error])
     }
     
     static func UtilMakeShortSearchString(string:String) -> String{
