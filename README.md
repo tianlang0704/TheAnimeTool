@@ -1,7 +1,7 @@
 # TheAnimeTool
 This tool is currently in development.
 
-Since torrent tools cannot be publish in the app store, this tool is only for learning purpose.
+Since torrent tools cannot be published in the app store, this tool is only for learning purpose.
 
 ## Introduction
 A convenient tool that uses anilist API  and nyaa tracker for iOS anime watching.
